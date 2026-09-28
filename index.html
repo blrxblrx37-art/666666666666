@@ -315,6 +315,18 @@ button:active,.btn:active,.btn-primary:active,.btn-accent:active,.btn-new-server
 body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),transparent 28%),radial-gradient(ellipse at 88% 18%,rgba(255,55,95,.22),transparent 27%),radial-gradient(ellipse at 48% 110%,rgba(144,20,80,.16),transparent 35%),linear-gradient(145deg,#080207 0%,#1b0717 48%,#09030a 100%)!important}
 .btn-accent,.btn-primary,.btn-new-server{background:linear-gradient(120deg,rgba(190,20,54,.92),rgba(239,68,68,.82),rgba(190,24,88,.88))!important}
 .broadcast-banner{display:none;margin:0 0 18px;padding:14px 18px;border:1px solid rgba(255,105,125,.42);border-radius:14px;background:linear-gradient(110deg,rgba(117,11,42,.55),rgba(40,8,30,.48));box-shadow:0 0 28px rgba(225,29,72,.16);color:#ffe4e8;backdrop-filter:blur(18px)}.broadcast-banner.show{display:flex;align-items:center;gap:12px}.broadcast-banner i{color:#fb7185;font-size:1.15rem}.broadcast-banner small{display:block;color:#fda4af;margin-top:3px}
+
+/* PERFORMANCE GUARD: keep galaxy effects smooth on mobile */
+@media(max-width:700px){
+  body::before{animation:none!important;filter:none!important;transform:none!important}
+  body::after{animation:starTwinkle 16s ease-in-out infinite alternate!important;background-size:180px 190px,260px 230px,220px 270px,310px 240px,240px 260px,340px 280px!important;opacity:.42!important}
+  .space-layer::before,.space-layer::after{animation:none!important}
+  .card,.metric,.stat-card,.server-card,.settings-card,.files-list,.console-wrap,.modal,.plan-card,.feat-card,.step-card,.feature-card,.pricing-card{backdrop-filter:blur(8px)!important;-webkit-backdrop-filter:blur(8px)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 25px rgba(0,0,0,.24)!important}
+  .card:hover,.metric:hover,.stat-card:hover,.server-card:hover,.feat-card:hover,.plan-card:hover,.feature-card:hover,.pricing-card:hover{transform:none!important}
+  .btn-accent,.btn-primary,.btn-new-server{animation:none!important;background-position:50% 50%!important}
+  button::before,.btn::before,.btn-primary::before,.btn-accent::before,.btn-new-server::before,.ctrl-btn::before,.sc-btn::before,.ftool-btn::before,.cact-btn::before,.logout-btn::before{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){body::before,body::after,.space-layer::before,.space-layer::after{animation:none!important}}
 </style>
 </head>
 <body>
