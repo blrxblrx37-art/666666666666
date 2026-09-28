@@ -90,6 +90,28 @@ canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 /* footer note */
 .auth-footer{text-align:center;margin-top:20px;font-size:.78rem;color:var(--text3)}
 .auth-footer a{color:var(--accent2);text-decoration:none;font-weight:600}
+
+/* SPACE GALAXY VISUAL UPGRADE */
+html{background:#02040d}
+body{position:relative;isolation:isolate;background:transparent!important;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;background:radial-gradient(ellipse at 12% 8%,rgba(36,113,255,.26),transparent 28%),radial-gradient(ellipse at 88% 18%,rgba(161,58,255,.22),transparent 27%),radial-gradient(ellipse at 48% 110%,rgba(0,207,255,.14),transparent 35%),linear-gradient(145deg,#02040d 0%,#070b1e 48%,#030510 100%);animation:galaxyBreath 14s ease-in-out infinite alternate}
+body::after{content:"";position:fixed;inset:-20%;z-index:-2;pointer-events:none;opacity:.8;background-image:radial-gradient(1px 1px at 8% 18%,rgba(255,255,255,.95),transparent 1.5px),radial-gradient(1px 1px at 23% 74%,rgba(114,207,255,.9),transparent 1.5px),radial-gradient(1px 1px at 44% 31%,rgba(255,255,255,.9),transparent 1.5px),radial-gradient(1px 1px at 67% 15%,rgba(205,180,255,.95),transparent 1.5px),radial-gradient(1px 1px at 82% 67%,rgba(255,255,255,.8),transparent 1.5px),radial-gradient(1px 1px at 93% 37%,rgba(90,190,255,.8),transparent 1.5px);background-size:180px 190px,260px 230px,220px 270px,310px 240px,240px 260px,340px 280px;animation:starDrift 34s linear infinite,starTwinkle 6s ease-in-out infinite alternate}
+@keyframes galaxyBreath{0%{filter:hue-rotate(0deg);transform:scale(1)}100%{filter:hue-rotate(14deg);transform:scale(1.04)}}
+@keyframes starDrift{to{background-position:180px 120px,-160px 190px,120px -160px,-210px 100px,150px -180px,-180px 140px}}
+@keyframes starTwinkle{0%{opacity:.35}45%{opacity:.9}100%{opacity:.55}}
+.space-layer{opacity:.72!important;mix-blend-mode:screen!important}
+.card,.metric,.stat-card,.server-card,.settings-card,.files-list,.console-wrap,.modal,.plan-card,.feat-card,.step-card,.feature-card,.pricing-card{background:linear-gradient(145deg,rgba(17,27,65,.48),rgba(5,10,28,.32))!important;border-color:rgba(145,177,255,.22)!important;backdrop-filter:blur(22px) saturate(135%);-webkit-backdrop-filter:blur(22px) saturate(135%);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 55px rgba(0,0,0,.28),0 0 28px rgba(54,112,255,.07);transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.card:hover,.metric:hover,.stat-card:hover,.server-card:hover,.feat-card:hover,.plan-card:hover,.feature-card:hover,.pricing-card:hover{border-color:rgba(108,190,255,.55)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 22px 65px rgba(0,0,0,.36),0 0 34px rgba(46,151,255,.16);transform:translateY(-4px)}
+button,.btn,.btn-primary,.btn-accent,.btn-new-server,.ctrl-btn,.sc-btn,.ftool-btn,.cact-btn,.logout-btn,.nav-item{position:relative;overflow:hidden;transition:transform .24s ease,box-shadow .24s ease,background .24s ease,border-color .24s ease!important}
+button::before,.btn::before,.btn-primary::before,.btn-accent::before,.btn-new-server::before,.ctrl-btn::before,.sc-btn::before,.ftool-btn::before,.cact-btn::before,.logout-btn::before{content:"";position:absolute;top:0;bottom:0;left:-80%;width:45%;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(255,255,255,.27),transparent);transform:skewX(-18deg);transition:left .65s ease}
+button:hover::before,.btn:hover::before,.btn-primary:hover::before,.btn-accent:hover::before,.btn-new-server:hover::before,.ctrl-btn:hover::before,.sc-btn:hover::before,.ftool-btn:hover::before,.cact-btn:hover::before,.logout-btn:hover::before{left:135%}
+button:hover,.btn:hover,.btn-primary:hover,.btn-accent:hover,.btn-new-server:hover,.ctrl-btn:hover,.sc-btn:hover,.ftool-btn:hover,.cact-btn:hover,.logout-btn:hover{transform:translateY(-2px);box-shadow:0 9px 28px rgba(42,139,255,.22),0 0 18px rgba(104,124,255,.18)}
+button:active,.btn:active,.btn-primary:active,.btn-accent:active,.btn-new-server:active,.ctrl-btn:active,.sc-btn:active,.ftool-btn:active,.cact-btn:active,.logout-btn:active{transform:translateY(1px) scale(.98)}
+.btn-accent,.btn-primary,.btn-new-server{background:linear-gradient(120deg,rgba(34,117,255,.88),rgba(127,76,255,.8),rgba(23,194,255,.82))!important;background-size:210% 210%!important;animation:buttonGradient 7s ease infinite;box-shadow:0 0 22px rgba(51,126,255,.3)}
+@keyframes buttonGradient{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.stat-value,.metric strong{ text-shadow:0 0 18px rgba(102,194,255,.23)}
+.dot-on{animation:onlinePulse 2s ease-in-out infinite}@keyframes onlinePulse{50%{box-shadow:0 0 3px var(--green),0 0 18px var(--green)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
