@@ -468,6 +468,18 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
 
       <!-- Files -->
       <div class="tab-pane" id="pane-files">
+        <div id="imageHostingPanel" style="display:none">
+          <div class="settings-card">
+            <h3><i class="fas fa-images" style="color:var(--accent2)"></i> PHOTO</h3>
+            <p style="font-size:.82rem;color:var(--text3);margin-bottom:14px">ارفع صور JPG أو PNG أو GIF أو WEBP، ثم انسخ الرابط المباشر أو احذف الصورة.</p>
+            <input type="file" id="imageIn" accept="image/jpeg,image/png,image/gif,image/webp" multiple style="display:none" onchange="uploadImages(this.files)">
+            <button class="ftool-btn primary" onclick="document.getElementById('imageIn').click()"><i class="fas fa-cloud-arrow-up"></i> رفع الصور</button>
+            <div id="imageDropZone" class="upload-zone" style="margin-top:14px" onclick="document.getElementById('imageIn').click()" ondragover="onImageDragOver(event)" ondragleave="onImageDragLeave(event)" ondrop="onImageDrop(event)">
+              <i class="fas fa-image"></i><p>اسحب الصور هنا أو انقر للاختيار</p><span>PNG · JPG · GIF · WEBP</span>
+            </div>
+          </div>
+          <div id="imagesGrid" class="servers-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr));margin-bottom:18px"></div>
+        </div>
         <div class="files-toolbar">
           <button class="ftool-btn primary" onclick="document.getElementById('fileIn').click()"><i class="fas fa-cloud-arrow-up"></i> رفع ملفات</button>
           <input type="file" id="fileIn" multiple style="display:none" onchange="uploadFiles(this.files)">
@@ -554,14 +566,10 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
       </div>
       <div class="mfield">
         <label>لغة / Runtime الخادم</label>
-        <div class="mfield"><label>نوع الخادم</label><select class="minp" id="newSrvType" onchange="syncServerType()"><option value="bot">🤖 بوت</option><option value="website">🌐 موقع</option></select></div>
+        <div class="mfield"><label>نوع الخادم</label><select class="minp" id="newSrvType" onchange="syncServerType()"><option value="bot">🤖 BOT</option><option value="website">🌐 WEBSITE</option><option value="image">🖼️ PHOTO</option></select></div>
+        <p id="botTypeHint" style="font-size:.76rem;color:var(--text3);margin-top:-8px;margin-bottom:14px">BOT: ارفع main.py أو bot.py مع requirements.txt، ثم شغّل الخادم. سيتم تشغيله كعملية Python مستقلة.</p>
           <select class="minp" id="newSrvLanguage">
-          <option value="python">PYTHON</option>
-          <option value="php">PHP</option>
-          <option value="nodejs">Node.js</option>
-          <option value="c">C</option>
-          <option value="cpp">C++</option>
-          <option value="html">HTML</option>
+          <option value="python">PYTHON</option><option value="nodejs">Node.js</option><option value="php">PHP</option><option value="java">Java</option><option value="ruby">Ruby</option><option value="go">Go</option><option value="rust">Rust</option><option value="elixir">Elixir</option><option value="deno">Deno</option><option value="shell">Shell</option><option value="c">C</option><option value="cpp">C++</option><option value="html">HTML / Static</option><option value="image">PHOTO</option>
         </select>
       </div>
       <div id="createAlert" style="display:none;background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.25);color:#fb7185;border-radius:9px;padding:10px 14px;font-size:.83rem;margin-bottom:12px"></div>
@@ -645,11 +653,11 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
 // Fetch the per-session CSRF token and attach it to every state-changing API call.
 (()=>{const nativeFetch=window.fetch.bind(window);const csrf=async()=>{const r=await nativeFetch('/api/csrf',{cache:'no-store'});const d=await r.json();return d.token;};window.fetch=async(input,init={})=>{const url=typeof input==='string'?input:input.url;const method=(init.method||'GET').toUpperCase();if(url.startsWith('/api/')&&!['GET','HEAD','OPTIONS'].includes(method)&&!url.endsWith('/csrf')){init.headers=new Headers(init.headers||{});init.headers.set('X-CSRF-Token',await csrf());}let response=await nativeFetch(input,init);if(response.status===403&&url.startsWith('/api/')&&!url.endsWith('/csrf')){init.headers=new Headers(init.headers||{});init.headers.set('X-CSRF-Token',await csrf());response=await nativeFetch(input,init);}return response;};})();
 
-let CS = null, pollTimer = null, currentFile = null, confirmCb = null, renameTarget = null, createdFolder = null;
+let CS = null, pollTimer = null, streamSource = null, currentFile = null, confirmCb = null, renameTarget = null, createdFolder = null;
 let selectedPlan = null;
 const PLANS = {};
 
-function syncServerType(){const type=document.getElementById('newSrvType')?.value;const lang=document.getElementById('newSrvLanguage');if(!lang)return;if(type==='website'){lang.value='html';lang.disabled=true}else{lang.disabled=false;if(lang.value==='html')lang.value='python'}}
+function syncServerType(){const type=document.getElementById('newSrvType')?.value;const lang=document.getElementById('newSrvLanguage');if(!lang)return;if(type==='website'){lang.value='html';lang.disabled=true}else if(type==='image'){lang.value='image';lang.disabled=true}else{lang.disabled=false;if(lang.value==='html'||lang.value==='image')lang.value='python'}}
 async function returnToAdmin(){const r=await fetch('/api/admin/impersonate/return',{method:'POST'});const d=await r.json();if(d.success)location.href=d.redirect||'/admin'}
 
 async function refreshSystemNotices(){
@@ -721,8 +729,8 @@ async function loadServers(){
   }catch(e){ grid.innerHTML='<div style="grid-column:1/-1;padding:60px;text-align:center;color:var(--red)"><i class="fas fa-triangle-exclamation"></i> خطأ في التحميل</div>'; }
 }
 
-function languageLabel(lang){return ({python:'PYTHON',php:'PHP',nodejs:'Node.js',node:'Node.js',javascript:'Node.js',c:'C',cpp:'C++',html:'HTML'})[String(lang||'').toLowerCase()]||String(lang||'').toUpperCase();}
-function languageIcon(lang){return ({python:'fab fa-python',php:'fab fa-php',nodejs:'fab fa-node-js',node:'fab fa-node-js',javascript:'fab fa-js',c:'fas fa-c',cpp:'fas fa-code',html:'fab fa-html5'})[String(lang||'').toLowerCase()]||'fas fa-code';}
+function languageLabel(lang){return ({python:'PYTHON',php:'PHP',nodejs:'Node.js',node:'Node.js',javascript:'Node.js',java:'Java',ruby:'Ruby',go:'Go',rust:'Rust',elixir:'Elixir',deno:'Deno',shell:'Shell',c:'C',cpp:'C++',html:'HTML',image:'Image Hosting'})[String(lang||'').toLowerCase()]||String(lang||'').toUpperCase();}
+function languageIcon(lang){return ({python:'fab fa-python',php:'fab fa-php',nodejs:'fab fa-node-js',node:'fab fa-node-js',javascript:'fab fa-js',java:'fab fa-java',ruby:'fas fa-gem',go:'fas fa-code',rust:'fas fa-cog',elixir:'fas fa-bolt',deno:'fas fa-bolt',shell:'fas fa-terminal',c:'fas fa-c',cpp:'fas fa-code',html:'fab fa-html5',image:'fas fa-images'})[String(lang||'').toLowerCase()]||'fas fa-code';}
 function buildServerCard(s){
   const running = s.status==='Running';
   const div = document.createElement('div');
@@ -777,6 +785,11 @@ async function quickDelete(folder, title){
 // ===== OPEN SERVER =====
 function openServer(s){
   CS = s;
+  const isImageHosting = String(s.language||s.server_language||'').toLowerCase()==='image' || s.server_type==='image';
+  document.getElementById('imageHostingPanel').style.display = isImageHosting ? 'block' : 'none';
+  document.getElementById('filesList').style.display = isImageHosting ? 'none' : 'block';
+  document.querySelector('#pane-files .files-toolbar').style.display = isImageHosting ? 'none' : 'flex';
+  document.getElementById('dropZone').style.display = isImageHosting ? 'none' : 'block';
   document.getElementById('homeView').classList.remove('active');
   document.getElementById('detailView').classList.add('active');
   document.getElementById('nav-console').style.display='flex';
@@ -796,16 +809,18 @@ function openServer(s){
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.getElementById('pane-console').classList.add('active');
   if(pollTimer) clearInterval(pollTimer);
+  if(streamSource) streamSource.close();
   fetchStats();
-  pollTimer = setInterval(fetchStats, 4000);
-  loadFiles();
+  pollTimer = setInterval(fetchStats, 10000);
+  if(window.EventSource){streamSource=new EventSource(`/api/server/console/${s.id}/stream`); streamSource.onmessage=()=>fetchStats();}
+  if(isImageHosting) loadImages(); else loadFiles();
   loadStartupFiles();
   loadApiKey();
 }
 
 function showHome(){
   CS = null;
-  if(pollTimer){clearInterval(pollTimer);pollTimer=null;}
+  if(pollTimer){clearInterval(pollTimer);pollTimer=null;} if(streamSource){streamSource.close();streamSource=null;}
   document.getElementById('detailView').classList.remove('active');
   document.getElementById('homeView').classList.add('active');
   document.getElementById('nav-console').style.display='none';
@@ -893,7 +908,7 @@ function confirmDelete(){
   });
 }
 
-function clearConsole(){ document.getElementById('consoleOut').textContent=''; }
+async function clearConsole(){ if(!CS) return; const r=await fetch(`/api/server/console/${CS.folder}/clear`,{method:'POST'}); const d=await r.json(); if(d.success){document.getElementById('consoleOut').textContent='';toast('تم مسح الكونسول فعلياً','success')}else toast(d.message||'فشل المسح','error'); }
 async function sendConsoleCommand(){
   if(!CS) return;
   const input=document.getElementById('consoleCommand'), command=input.value.trim();
@@ -931,7 +946,20 @@ async function loadFiles(){
     }
   }catch(e){ body.innerHTML='<div style="padding:40px;text-align:center;color:var(--red)">خطأ في التحميل</div>'; }
 }
-
+async function loadImages(){
+  if(!CS)return;
+  const grid=document.getElementById('imagesGrid'); grid.innerHTML='<div style="padding:30px;color:var(--text3)">جاري تحميل الصور...</div>';
+  try{const r=await fetch(`/api/images/${CS.folder}`),d=await r.json();if(!d.success)throw Error(d.message||'فشل تحميل الصور');const images=d.images||[];if(!images.length){grid.innerHTML='<div style="padding:30px;color:var(--text3)">لا توجد صور بعد</div>';return;}grid.innerHTML='';images.forEach(img=>{const card=document.createElement('div');card.className='server-card';const url=esc(img.url),name=esc(img.original_name||'image');card.innerHTML=`<img src="${url}" alt="${name}" style="width:100%;height:150px;object-fit:cover;display:block" loading="lazy"><div class="sc-body"><div class="sc-name" title="${name}">${name}</div><div class="sc-meta"><span class="sc-tag">${Math.ceil((img.size||0)/1024)} KB</span></div><div class="sc-actions"><button class="sc-btn detail" onclick="copyImageUrl('${url}')"><i class="fas fa-copy"></i> نسخ الرابط</button><a class="sc-btn detail" href="${url}" target="_blank"><i class="fas fa-external-link"></i> فتح</a><button class="sc-btn delete" onclick="deleteImage(${img.id})"><i class="fas fa-trash"></i></button></div></div>`;grid.appendChild(card);});}catch(e){grid.innerHTML=`<div style="padding:30px;color:var(--red)">${esc(e.message||'خطأ في تحميل الصور')}</div>`;}
+}
+async function uploadImages(files){
+  if(!CS||!files||!files.length)return;const fd=new FormData();for(const f of files)fd.append('files[]',f);toast('جاري رفع الصور...','info');
+  try{const r=await fetch(`/api/images/${CS.folder}`,{method:'POST',body:fd}),d=await r.json();toast(d.message||(d.success?'تم رفع الصور':'فشل الرفع'),d.success?'success':'error');if(d.success)loadImages();}catch(e){toast('خطأ في رفع الصور','error');}document.getElementById('imageIn').value='';
+}
+function onImageDragOver(e){e.preventDefault();document.getElementById('imageDropZone').classList.add('drag');}
+function onImageDragLeave(){document.getElementById('imageDropZone').classList.remove('drag');}
+function onImageDrop(e){e.preventDefault();onImageDragLeave();uploadImages(e.dataTransfer.files);}
+async function copyImageUrl(url){try{await navigator.clipboard.writeText(location.origin+url);toast('تم نسخ الرابط المباشر','success');}catch(e){prompt('انسخ الرابط:',location.origin+url);}}
+async function deleteImage(id){showConfirm('حذف هذه الصورة؟',async()=>{const r=await fetch(`/api/images/${CS.folder}/${id}`,{method:'DELETE'}),d=await r.json();toast(d.message||(d.success?'تم حذف الصورة':'فشل الحذف'),d.success?'success':'error');if(d.success)loadImages();});}
 function getFileIcon(name, isDir){
   if(isDir) return ['fas fa-folder','fi-dir'];
   const ext = name.split('.').pop().toLowerCase();
@@ -950,6 +978,7 @@ function buildFileRow(f){
   if(!f.is_dir) acts += `<button class="fact edit-f" onclick="editFile('${esc(f.name)}')"><i class="fas fa-pen"></i> تعديل</button>`;
   acts += `<button class="fact rename-f" onclick="openRename('${esc(f.name)}')"><i class="fas fa-i-cursor"></i> إعادة تسمية</button>`;
   if(f.is_zip) acts += `<button class="fact unzip-f" onclick="unzipFile('${esc(f.name)}')"><i class="fas fa-file-zipper"></i> فك</button>`;
+  acts += `<button class="fact" onclick="downloadFile('${esc(f.name)}')"><i class="fas fa-download"></i> تحميل</button>`;
   acts += `<button class="fact del-f" onclick="deleteFile('${esc(f.name)}')"><i class="fas fa-trash"></i></button>`;
   tr.innerHTML = `
     <div><div class="file-icon ${cls}"><i class="${icon}"></i></div></div>
@@ -957,7 +986,25 @@ function buildFileRow(f){
     <div class="file-size">${f.size}</div>
     <div class="file-date">${f.modified}</div>
     <div class="file-acts">${acts}</div>`;
+  let longPress;
+  tr.addEventListener('touchstart',()=>{longPress=setTimeout(()=>openFileActions(f.name, f.is_dir),650)},{passive:true});
+  ['touchend','touchcancel','touchmove'].forEach(type=>tr.addEventListener(type,()=>clearTimeout(longPress),{passive:true}));
   return tr;
+}
+
+function downloadFile(name){
+  if(!CS) return;
+  const a=document.createElement('a');
+  a.href=`/api/files/download/${CS.folder}/${encodeURIComponent(name)}`;
+  a.download=name; document.body.appendChild(a); a.click(); a.remove();
+}
+
+function openFileActions(name,isDir){
+  const choice=prompt('اختر العملية: 1 تعديل  2 إعادة تسمية  3 تحميل  4 حذف');
+  if(choice==='1'&&!isDir) editFile(name);
+  else if(choice==='2') openRename(name);
+  else if(choice==='3') downloadFile(name);
+  else if(choice==='4') deleteFile(name);
 }
 
 async function editFile(name){
