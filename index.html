@@ -327,7 +327,10 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
   button::before,.btn::before,.btn-primary::before,.btn-accent::before,.btn-new-server::before,.ctrl-btn::before,.sc-btn::before,.ftool-btn::before,.cact-btn::before,.logout-btn::before{display:none!important}
 }
 @media(prefers-reduced-motion:reduce){body::before,body::after,.space-layer::before,.space-layer::after{animation:none!important}}
+.dash-search{display:flex;align-items:center;gap:8px;width:min(220px,24vw);padding:8px 11px;border:1px solid var(--border);border-radius:10px;background:rgba(5,10,28,.48);color:var(--text3)}.dash-search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font:inherit;font-size:.76rem}.topbar-icon{border:1px solid var(--border);background:rgba(8,12,31,.55);color:var(--text2);border-radius:10px;width:36px;height:36px;cursor:pointer}.welcome-hero{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px;padding:24px 26px;border:1px solid rgba(100,180,255,.22);border-radius:18px;background:linear-gradient(115deg,rgba(22,47,105,.48),rgba(66,22,110,.3));box-shadow:0 18px 44px rgba(0,0,0,.22)}.welcome-hero h1{font-size:1.35rem;margin:8px 0 6px}.welcome-hero h1 strong{color:#8bdcff;text-shadow:0 0 20px rgba(34,211,238,.28)}.welcome-hero p{color:var(--text2);font-size:.84rem}.eyebrow{font-size:.68rem;letter-spacing:1.4px;color:#67e8f9;font-weight:700}.welcome-hero .btn-accent{white-space:nowrap}
+@media(max-width:700px){.topbar-right{gap:6px}.dash-search{width:36px;padding:8px;justify-content:center}.dash-search input{display:none}.welcome-hero{align-items:flex-start;flex-direction:column;padding:20px}.welcome-hero h1{font-size:1.05rem}.welcome-hero .btn-accent{width:100%}}
 </style>
+<link rel="stylesheet" href="/static/mobile-neon.css">
 </head>
 <body>
 <div class="space-layer" aria-hidden="true"></div>
@@ -376,6 +379,8 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
       <span class="breadcrumb" id="topbarBreadcrumb"></span>
     </div>
     <div class="topbar-right">
+      <label class="dash-search"><i class="fas fa-search"></i><input id="serverSearch" type="search" placeholder="بحث في الخوادم..." oninput="filterServers(this.value)" aria-label="بحث في الخوادم"></label>
+      <button class="topbar-icon" title="الإشعارات" aria-label="الإشعارات" onclick="refreshSystemNotices()"><i class="fas fa-bell"></i></button>
       <span class="topbar-badge" id="planBadge"><i class="fas fa-cube"></i> أساسية</span>
       <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
@@ -385,6 +390,10 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
     <div class="broadcast-banner" id="broadcastBanner"></div>
     <!-- HOME VIEW -->
     <div class="view active" id="homeView">
+      <section class="welcome-hero">
+        <div><span class="eyebrow"><i class="fas fa-cloud"></i> CLOUD CONTROL CENTER</span><h1>مرحبًا بك في <strong>YOUSEF GOO HOST</strong></h1><p>إدارة سيرفراتك بسهولة وسرعة من لوحة VPS واحدة.</p></div>
+        <button class="btn-accent" onclick="openCreateModal()"><i class="fas fa-plus"></i> إنشاء سيرفر</button>
+      </section>
       <div class="stats-row">
         <div class="stat-card">
           <div class="stat-card-top"><div class="stat-label">الخوادم</div><div class="stat-icon si-blue"><i class="fas fa-server"></i></div></div>
@@ -409,6 +418,8 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
           <div class="stat-value" id="expiry">—</div>
           <div class="stat-sub">يوم متبقي</div>
         </div>
+        <div class="stat-card"><div class="stat-card-top"><div class="stat-label">تعمل الآن</div><div class="stat-icon si-green"><i class="fas fa-circle-play"></i></div></div><div class="stat-value" id="runningCount">0</div><div class="stat-sub">ONLINE</div></div>
+        <div class="stat-card"><div class="stat-card-top"><div class="stat-label">متوقفة</div><div class="stat-icon si-amber"><i class="fas fa-circle-pause"></i></div></div><div class="stat-value" id="stoppedCount">0</div><div class="stat-sub">OFFLINE / ERROR</div></div>
       </div>
       <div class="srv-header">
         <div class="srv-title"><i class="fas fa-cubes"></i> خوادمك النشطة</div>
@@ -459,6 +470,7 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
             <div class="console-command"><input id="consoleCommand" placeholder="اكتب أمرًا وأرسله للعملية..." maxlength="2000" onkeydown="if(event.key==='Enter') sendConsoleCommand()"><button class="cact-btn" onclick="sendConsoleCommand()"><i class="fas fa-paper-plane"></i> إرسال</button></div>
             <button class="cact-btn" onclick="fetchStats()"><i class="fas fa-rotate"></i> تحديث</button>
             <button class="cact-btn" onclick="copyConsole()"><i class="fas fa-copy"></i> نسخ الكونسول</button>
+            <button class="cact-btn" onclick="downloadConsoleLogs()"><i class="fas fa-download"></i> تحميل السجل</button>
             <button class="cact-btn" onclick="clearConsole()"><i class="fas fa-trash-can"></i> مسح</button>
             <span style="margin-right:auto;font-size:.75rem;color:var(--text3)" id="consoleMem">RAM: —</span>
             <span style="font-size:.75rem;color:var(--text3)" id="consoleUptime">مدة: —</span>
@@ -486,6 +498,7 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
           <button class="ftool-btn" onclick="openNewFileModal()"><i class="fas fa-file-plus"></i> ملف جديد</button>
           <button class="ftool-btn" onclick="openNewFolderModal()"><i class="fas fa-folder-plus"></i> مجلد جديد</button>
           <button class="ftool-btn" onclick="installPkgs()"><i class="fas fa-cube"></i> تثبيت المكتبات</button>
+          <label class="file-search"><i class="fas fa-search"></i><input id="fileSearch" type="search" placeholder="بحث في الملفات..." oninput="filterFiles(this.value)" aria-label="بحث في الملفات"></label>
         </div>
         <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileIn').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
           <i class="fas fa-cloud-arrow-up"></i>
@@ -568,9 +581,18 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
         <label>لغة / Runtime الخادم</label>
         <div class="mfield"><label>نوع الخادم</label><select class="minp" id="newSrvType" onchange="syncServerType()"><option value="bot">🤖 BOT</option><option value="website">🌐 WEBSITE</option><option value="image">🖼️ PHOTO</option></select></div>
         <p id="botTypeHint" style="font-size:.76rem;color:var(--text3);margin-top:-8px;margin-bottom:14px">BOT: ارفع main.py أو bot.py مع requirements.txt، ثم شغّل الخادم. سيتم تشغيله كعملية Python مستقلة.</p>
-          <select class="minp" id="newSrvLanguage">
+          <select class="minp" id="newSrvLanguage" onchange="syncPhpModeField()">
           <option value="python">PYTHON</option><option value="nodejs">Node.js</option><option value="php">PHP</option><option value="java">Java</option><option value="ruby">Ruby</option><option value="go">Go</option><option value="rust">Rust</option><option value="elixir">Elixir</option><option value="deno">Deno</option><option value="shell">Shell</option><option value="c">C</option><option value="cpp">C++</option><option value="html">HTML / Static</option><option value="image">PHOTO</option>
-        </select>
+          </select>
+          <div class="mfield" id="phpModeField" style="display:none;margin-top:12px">
+            <label>وضع PHP</label>
+            <select class="minp" id="newPhpMode">
+              <option value="cli">PHP CLI Bot / Long Polling</option>
+              <option value="webhook">PHP Webhook Bot</option>
+              <option value="website">PHP Website / API</option>
+            </select>
+            <p style="font-size:.72rem;color:var(--text3);margin-top:6px">الكاشف يقدم اقتراحًا فقط؛ يمكنك تغيير الوضع بعد رفع الملفات.</p>
+          </div>
       </div>
       <div id="createAlert" style="display:none;background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.25);color:#fb7185;border-radius:9px;padding:10px 14px;font-size:.83rem;margin-bottom:12px"></div>
       <button class="btn-accent" style="width:100%;padding:12px" onclick="doCreateServer()"><i class="fas fa-check"></i> إنشاء الخادم</button>
@@ -653,11 +675,12 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
 // Fetch the per-session CSRF token and attach it to every state-changing API call.
 (()=>{const nativeFetch=window.fetch.bind(window);const csrf=async()=>{const r=await nativeFetch('/api/csrf',{cache:'no-store'});const d=await r.json();return d.token;};window.fetch=async(input,init={})=>{const url=typeof input==='string'?input:input.url;const method=(init.method||'GET').toUpperCase();if(url.startsWith('/api/')&&!['GET','HEAD','OPTIONS'].includes(method)&&!url.endsWith('/csrf')){init.headers=new Headers(init.headers||{});init.headers.set('X-CSRF-Token',await csrf());}let response=await nativeFetch(input,init);if(response.status===403&&url.startsWith('/api/')&&!url.endsWith('/csrf')){init.headers=new Headers(init.headers||{});init.headers.set('X-CSRF-Token',await csrf());response=await nativeFetch(input,init);}return response;};})();
 
-let CS = null, pollTimer = null, streamSource = null, currentFile = null, confirmCb = null, renameTarget = null, createdFolder = null;
+let CS = null, pollTimer = null, streamSource = null, currentFile = null, confirmCb = null, renameTarget = null, createdFolder = null, allServers = [];
 let selectedPlan = null;
 const PLANS = {};
 
-function syncServerType(){const type=document.getElementById('newSrvType')?.value;const lang=document.getElementById('newSrvLanguage');if(!lang)return;if(type==='website'){lang.value='html';lang.disabled=true}else if(type==='image'){lang.value='image';lang.disabled=true}else{lang.disabled=false;if(lang.value==='html'||lang.value==='image')lang.value='python'}}
+function syncServerType(){const type=document.getElementById('newSrvType')?.value;const lang=document.getElementById('newSrvLanguage');if(!lang)return;if(type==='website'){lang.value='html';lang.disabled=true}else if(type==='image'){lang.value='image';lang.disabled=true}else{lang.disabled=false;if(lang.value==='html'||lang.value==='image')lang.value='python'}syncPhpModeField()}
+function syncPhpModeField(){const lang=document.getElementById('newSrvLanguage')?.value;const field=document.getElementById('phpModeField');if(field)field.style.display=lang==='php'?'block':'none'}
 async function returnToAdmin(){const r=await fetch('/api/admin/impersonate/return',{method:'POST'});const d=await r.json();if(d.success)location.href=d.redirect||'/admin'}
 
 async function refreshSystemNotices(){
@@ -716,6 +739,10 @@ async function loadServers(){
     document.getElementById('diskUsed').textContent = `${diskUsed.toFixed(1)} MB`;
     document.getElementById('diskSub').textContent = `من ${(diskTotal/1024).toFixed(0)} GB`;
     document.getElementById('diskBar').style.width = Math.min((diskUsed/(diskTotal/1024))*100,100)+'%';
+    allServers = d.servers || [];
+    const running = allServers.filter(x=>String(x.status).toLowerCase()==='running').length;
+    document.getElementById('runningCount').textContent = running;
+    document.getElementById('stoppedCount').textContent = Math.max(0, allServers.length-running);
     const expiryDate = s.expiry ? new Date(s.expiry) : null;
     const remainingDays = expiryDate ? Math.max(0, Math.ceil((expiryDate - Date.now()) / 86400000)) : null;
     document.getElementById('expiry').textContent = remainingDays === null ? '—' : remainingDays;
@@ -726,8 +753,10 @@ async function loadServers(){
     }
     grid.innerHTML='';
     d.servers.forEach(s => grid.appendChild(buildServerCard(s)));
+    filterServers(document.getElementById('serverSearch')?.value||'');
   }catch(e){ grid.innerHTML='<div style="grid-column:1/-1;padding:60px;text-align:center;color:var(--red)"><i class="fas fa-triangle-exclamation"></i> خطأ في التحميل</div>'; }
 }
+function filterServers(query){const q=String(query||'').trim().toLowerCase();document.querySelectorAll('#serversGrid .server-card').forEach(card=>{card.style.display=!q||card.textContent.toLowerCase().includes(q)?'':'none';});}
 
 function languageLabel(lang){return ({python:'PYTHON',php:'PHP',nodejs:'Node.js',node:'Node.js',javascript:'Node.js',java:'Java',ruby:'Ruby',go:'Go',rust:'Rust',elixir:'Elixir',deno:'Deno',shell:'Shell',c:'C',cpp:'C++',html:'HTML',image:'Image Hosting'})[String(lang||'').toLowerCase()]||String(lang||'').toUpperCase();}
 function languageIcon(lang){return ({python:'fab fa-python',php:'fab fa-php',nodejs:'fab fa-node-js',node:'fab fa-node-js',javascript:'fab fa-js',java:'fab fa-java',ruby:'fas fa-gem',go:'fas fa-code',rust:'fas fa-cog',elixir:'fas fa-bolt',deno:'fas fa-bolt',shell:'fas fa-terminal',c:'fas fa-c',cpp:'fas fa-code',html:'fab fa-html5',image:'fas fa-images'})[String(lang||'').toLowerCase()]||'fas fa-code';}
@@ -743,7 +772,7 @@ function buildServerCard(s){
     <div class="sc-body">
       <div class="sc-name">${esc(s.title)}</div>
       <div class="sc-meta">
-        <span class="sc-tag"><i class="fas fa-code"></i> ${languageLabel(s.language||s.server_language)}</span><span class="sc-tag"><i class="fas fa-plug"></i> :${s.port||'N/A'}</span>
+        <span class="sc-tag"><i class="fas fa-code"></i> ${languageLabel(s.language||s.server_language)}</span><span class="sc-tag"><i class="fas fa-layer-group"></i> ${(s.server_type||'bot').toUpperCase()}</span><span class="sc-tag"><i class="fas fa-hashtag"></i>${s.id}</span><span class="sc-tag"><i class="fas fa-plug"></i> :${s.port||'N/A'}</span>
         <span class="sc-tag ${running?'green':''}">${planLabel(s.plan)}</span>
         ${s.uptime&&running?`<span class="sc-tag"><i class="fas fa-clock"></i> ${s.uptime}</span>`:''}
       </div>
@@ -924,6 +953,9 @@ async function copyConsole(){
   try{ await navigator.clipboard.writeText(text); toast('تم نسخ الكونسول','success'); }
   catch(e){ toast('تعذر النسخ من المتصفح','error'); }
 }
+function downloadConsoleLogs(){
+  const text=document.getElementById('consoleOut').innerText||''; const blob=new Blob([text],{type:'text/plain;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${(CS?.title||'server')}-console.log`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),500);
+}
 
 // ===== FILES =====
 async function loadFiles(){
@@ -938,6 +970,7 @@ async function loadFiles(){
     if(!files.length){ body.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">لا توجد ملفات — ارفع أول ملف!</div>'; return; }
     body.innerHTML = '';
     files.forEach(f => body.appendChild(buildFileRow(f)));
+    filterFiles(document.getElementById('fileSearch')?.value||'');
     // populate startup select
     const sel = document.getElementById('startupSel');
     if(sel){
@@ -946,6 +979,7 @@ async function loadFiles(){
     }
   }catch(e){ body.innerHTML='<div style="padding:40px;text-align:center;color:var(--red)">خطأ في التحميل</div>'; }
 }
+function filterFiles(query){const q=String(query||'').trim().toLowerCase();document.querySelectorAll('#filesBody .file-row').forEach(row=>{row.style.display=!q||row.textContent.toLowerCase().includes(q)?'':'none';});}
 async function loadImages(){
   if(!CS)return;
   const grid=document.getElementById('imagesGrid'); grid.innerHTML='<div style="padding:30px;color:var(--text3)">جاري تحميل الصور...</div>';
@@ -1135,6 +1169,7 @@ function copyApiKey(){
 function openCreateModal(){
   document.getElementById('newSrvName').value='';
   document.getElementById('newSrvType').value='bot'; document.getElementById('newSrvLanguage').value='python';
+  document.getElementById('newPhpMode').value='cli'; syncPhpModeField();
   document.getElementById('createAlert').style.display='none';
   document.getElementById('step1').style.display='block';
   document.getElementById('step3').style.display='none';
@@ -1146,6 +1181,7 @@ async function doCreateServer(){
   const name = document.getElementById('newSrvName').value.trim();
   const language = document.getElementById('newSrvLanguage').value;
   const type = document.getElementById('newSrvType').value;
+  const runtime_mode = language==='php' ? document.getElementById('newPhpMode').value : '';
   const alertBox = document.getElementById('createAlert');
   if(!name){ alertBox.style.display='block'; alertBox.textContent='أدخل اسماً للخادم'; return; }
   alertBox.style.display='none';
@@ -1154,7 +1190,7 @@ async function doCreateServer(){
   document.getElementById('createDone').style.display='none';
   document.getElementById('createStepMsg').textContent='جاري الإنشاء...';
   try{
-    const r = await fetch('/api/server/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,language,type})});
+    const r = await fetch('/api/server/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,language,type,runtime_mode})});
     const d = await r.json();
     if(d.success){
       document.getElementById('createSpinner').style.display='none';
@@ -1220,7 +1256,11 @@ function toast(msg, type='info'){
   clearTimeout(toastTimer);
   toastTimer = setTimeout(()=>t.classList.remove('show'),3200);
 }
-
+// Mobile navigation mirrors the reference app shell while reusing the existing views.
+function mobileHome(){ document.querySelectorAll('.mobile-bottom-nav button').forEach(b=>b.classList.remove('active')); document.getElementById('mnav-home').classList.add('active'); showHome(); }
+function mobileServers(){ document.querySelectorAll('.mobile-bottom-nav button').forEach(b=>b.classList.remove('active')); document.getElementById('mnav-servers').classList.add('active'); showHome(); setTimeout(()=>document.querySelector('.srv-header')?.scrollIntoView({behavior:'smooth',block:'start'}),80); }
+function mobileFiles(){ document.querySelectorAll('.mobile-bottom-nav button').forEach(b=>b.classList.remove('active')); document.getElementById('mnav-files').classList.add('active'); if(CS){ switchTab('files'); } else { toast('افتح سيرفرًا أولاً للوصول إلى الملفات','info'); } }
+function mobileMore(){ document.querySelectorAll('.mobile-bottom-nav button').forEach(b=>b.classList.remove('active')); document.getElementById('mnav-more').classList.add('active'); document.getElementById('sidebar')?.classList.add('mobile-open'); document.getElementById('sbOverlay')?.classList.add('open'); }
 // ===== HELPERS =====
 function esc(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 function planLabel(p){ return p==='basic'?'أساسية':p==='premium'?'احترافية':p==='ultimate'?'أسطورية':p||'أساسية'; }
@@ -1235,5 +1275,11 @@ document.addEventListener('keydown',e=>{
 
 init();
 </script>
+<nav class="mobile-bottom-nav" aria-label="التنقل السريع">
+  <button id="mnav-home" class="active" onclick="mobileHome()"><i class="fas fa-house"></i><span>الرئيسية</span></button>
+  <button id="mnav-servers" onclick="mobileServers()"><i class="fas fa-server"></i><span>السيرفرات</span></button>
+  <button id="mnav-files" onclick="mobileFiles()"><i class="fas fa-folder"></i><span>الملفات</span></button>
+  <button id="mnav-more" onclick="mobileMore()"><i class="fas fa-ellipsis"></i><span>المزيد</span></button>
+</nav>
 </body>
 </html>
