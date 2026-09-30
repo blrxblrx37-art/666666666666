@@ -1068,9 +1068,24 @@ async function uploadFiles(files){
     const r = await fetch(`/api/files/upload/${CS.folder}`,{method:'POST',body:fd});
     const d = await r.json();
     toast(d.message||(d.success?'تم الرفع':'فشل'), d.success?'success':'error');
-    if(d.success) loadFiles();
+    if(d.success) { loadFiles(); if(Array.isArray(d.job_ids)) d.job_ids.forEach(pollPreparationJob); }
   }catch(e){ toast('خطأ في الرفع','error'); }
   document.getElementById('fileIn').value='';
+}
+
+async function pollPreparationJob(jobId){
+  let attempts=0;
+  const tick=async()=>{
+    if(attempts++>180) return;
+    try{
+      const r=await fetch(`/api/server/install-status/${encodeURIComponent(jobId)}`), d=await r.json();
+      const job=d.job||{};
+      if(job.status==='COMPLETED'){ toast('تم فك الضغط وتحليل المشروع وتجهيز البيئة','success'); loadFiles(); return; }
+      if(job.status==='FAILED'){ toast(job.message||'فشل تجهيز الأرشيف','error'); loadFiles(); return; }
+      setTimeout(tick,1000);
+    }catch(e){ setTimeout(tick,1500); }
+  };
+  tick();
 }
 
 function onDragOver(e){ e.preventDefault(); document.getElementById('dropZone').classList.add('drag'); }
