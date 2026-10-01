@@ -57,7 +57,7 @@ body{font-family:'Tajawal','Inter',sans-serif;background:var(--bg);color:var(--t
 .main.wide{margin-right:64px}
 
 /* TOPBAR */
-.topbar{height:60px;background:rgba(8,8,16,.9);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;backdrop-filter:blur(20px)}
+.topbar{height:60px;background:rgba(8,8,16,.9);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;backdrop-filter:blur(20px)}.topbar-menu-btn{position:absolute;left:20px;top:12px;width:36px;height:36px;border:1px solid var(--border2);border-radius:10px;background:rgba(8,12,31,.72);color:var(--accent2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;box-shadow:0 0 14px rgba(69,117,255,.16)}.topbar-menu-btn:hover{border-color:var(--cyan);color:#fff;background:rgba(27,54,126,.72);box-shadow:0 0 22px rgba(34,211,238,.28)}
 .topbar-title{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:10px}
 .topbar-title .breadcrumb{color:var(--text3);font-weight:400;font-size:.85rem}
 .topbar-right{display:flex;align-items:center;gap:12px}
@@ -273,8 +273,8 @@ body{font-family:'Tajawal','Inter',sans-serif;background:var(--bg);color:var(--t
 
 @media(max-width:900px){
   body{overflow-x:hidden}.sidebar{right:-260px;transform:none;transition:right .25s ease;box-shadow:-18px 0 40px rgba(0,0,0,.45)}.sidebar.mobile-open{right:0}
-  .main{margin-right:0;width:100%;min-width:0}.sb-toggle{display:none}
-  .sb-mobile-btn{display:flex;align-items:center;justify-content:center}
+  .main{margin-right:0;width:100%;min-width:0}.sb-toggle{display:none}.topbar{padding-left:68px;padding-right:14px}.topbar-menu-btn{left:16px}
+  .sb-mobile-btn{display:none}
   .stats-row{grid-template-columns:repeat(2,1fr)}
   .servers-grid{grid-template-columns:1fr}
   .files-list-header,.file-row{grid-template-columns:32px 1fr 90px 120px}
@@ -329,6 +329,31 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
 @media(prefers-reduced-motion:reduce){body::before,body::after,.space-layer::before,.space-layer::after{animation:none!important}}
 .dash-search{display:flex;align-items:center;gap:8px;width:min(220px,24vw);padding:8px 11px;border:1px solid var(--border);border-radius:10px;background:rgba(5,10,28,.48);color:var(--text3)}.dash-search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font:inherit;font-size:.76rem}.topbar-icon{border:1px solid var(--border);background:rgba(8,12,31,.55);color:var(--text2);border-radius:10px;width:36px;height:36px;cursor:pointer}.welcome-hero{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px;padding:24px 26px;border:1px solid rgba(100,180,255,.22);border-radius:18px;background:linear-gradient(115deg,rgba(22,47,105,.48),rgba(66,22,110,.3));box-shadow:0 18px 44px rgba(0,0,0,.22)}.welcome-hero h1{font-size:1.35rem;margin:8px 0 6px}.welcome-hero h1 strong{color:#8bdcff;text-shadow:0 0 20px rgba(34,211,238,.28)}.welcome-hero p{color:var(--text2);font-size:.84rem}.eyebrow{font-size:.68rem;letter-spacing:1.4px;color:#67e8f9;font-weight:700}.welcome-hero .btn-accent{white-space:nowrap}
 @media(max-width:700px){.topbar-right{gap:6px}.dash-search{width:36px;padding:8px;justify-content:center}.dash-search input{display:none}.welcome-hero{align-items:flex-start;flex-direction:column;padding:20px}.welcome-hero h1{font-size:1.05rem}.welcome-hero .btn-accent{width:100%}}
+
+/* Website servers only: a dedicated hosting/file-manager appearance. */
+.website-overview{display:none;position:relative;overflow:hidden;margin:-6px 0 20px;padding:24px 25px 18px;border:1px solid rgba(54,151,255,.42);border-radius:20px;background:linear-gradient(110deg,rgba(9,46,111,.76),rgba(11,19,58,.9) 58%,rgba(42,19,92,.62));box-shadow:inset 0 1px rgba(255,255,255,.08),0 16px 38px rgba(0,0,0,.28),0 0 30px rgba(30,125,255,.13)}
+.website-overview:before{content:'↑';position:absolute;left:34px;top:22px;width:72px;height:72px;display:grid;place-items:center;border:2px solid #2a9cff;border-radius:20px;color:#cbeaff;font-size:3rem;font-weight:800;text-shadow:0 0 18px #138cff;box-shadow:0 0 25px rgba(13,132,255,.65),inset 0 0 20px rgba(26,108,255,.35)}
+.website-mode .website-overview{display:block}.website-mode .detail-tabs{border-color:rgba(51,139,255,.36);background:rgba(2,10,31,.65)}.website-mode .dtab.active{background:linear-gradient(120deg,#147fff,#673dff)}.website-mode .files-list{border-color:rgba(55,139,255,.38)}
+.website-overview-copy{padding-left:98px}.website-eyebrow{color:#62efb6;font-size:.75rem;font-weight:700}.website-eyebrow i{font-size:.48rem;margin-left:5px;text-shadow:0 0 10px #18e6a0}.website-overview h2{font-size:1.42rem;margin:9px 0 4px;color:#eef7ff;text-shadow:0 0 16px rgba(59,162,255,.45)}.website-overview h2 i{color:#59baff;margin-left:7px}.website-overview p{color:#afc9ed;font-size:.86rem}.website-overview-actions{position:absolute;left:24px;bottom:19px;display:flex;gap:8px}.website-open-link,.website-upload-btn{display:flex;align-items:center;gap:7px;border-radius:10px;padding:9px 13px;font:600 .78rem 'Tajawal';cursor:pointer;text-decoration:none}.website-open-link{color:#a9d7ff;border:1px solid rgba(75,157,255,.4);background:rgba(13,79,171,.25)}.website-upload-btn{color:#fff;border:0;background:linear-gradient(120deg,#167dff,#6544ff);box-shadow:0 0 18px rgba(22,127,255,.4)}.website-mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px;padding-top:15px;border-top:1px solid rgba(83,145,232,.28)}.website-mini-stats>div{display:grid;grid-template-columns:26px 1fr;column-gap:7px;align-items:center}.website-mini-stats i{grid-row:span 2;color:#55b7ff;font-size:1.1rem;text-align:center}.website-mini-stats strong{font-size:.87rem;color:#e5f1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.website-mini-stats span{font-size:.68rem;color:#7797ca}
+.website-mode .ctrl-btns{display:none}.website-mode .detail-tabs .dtab[data-tab="console"],.website-mode .detail-tabs .dtab[data-tab="stats"],.website-mode .detail-tabs .dtab[data-tab="settings"]{display:none}.website-mode #pane-console,.website-mode #pane-stats,.website-mode #pane-settings{display:none!important}.website-mode .detail-header{justify-content:flex-start}.website-mode .detail-name{margin-right:auto}
+@media(max-width:600px){.website-overview{padding:20px 16px 15px}.website-overview:before{left:16px;top:19px;width:59px;height:59px;border-radius:16px;font-size:2.4rem}.website-overview-copy{padding-left:76px}.website-overview h2{font-size:1.08rem}.website-overview p{font-size:.74rem}.website-overview-actions{position:static;margin-top:17px}.website-open-link,.website-upload-btn{flex:1;justify-content:center;padding:9px 7px;font-size:.7rem}.website-mini-stats{margin-top:16px;gap:4px}.website-mini-stats strong{font-size:.72rem}.website-mini-stats span{font-size:.58rem}}
+
+/* PHP SERVER DASHBOARD — mobile reference layout */
+.php-dashboard{display:none}
+#detailView.php-mode .detail-header,#detailView.php-mode #websiteOverview{display:none}
+#detailView.php-mode .php-dashboard{display:block}
+.php-hero{height:205px;border:1px solid rgba(75,128,255,.35);border-radius:22px 22px 0 0;background:linear-gradient(110deg,#071129 0%,#071b43 48%,#0d1231 100%);position:relative;overflow:hidden;padding:25px 28px;display:flex;align-items:center;gap:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.php-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 30%,rgba(36,88,255,.35),transparent 28%),linear-gradient(135deg,transparent 42%,rgba(43,104,255,.12) 43%,transparent 44%),linear-gradient(45deg,transparent 60%,rgba(137,67,255,.13) 61%,transparent 62%);opacity:.9}
+.php-back{position:relative;z-index:2;width:52px;height:52px;border-radius:16px;background:rgba(6,16,43,.82);border:1px solid rgba(110,156,255,.38);color:#d9e8ff;font-size:1.45rem;cursor:pointer;flex:none}.php-brand-block{position:relative;z-index:2;display:flex;align-items:center;gap:15px}.php-logo,.php-mini-logo{border-radius:50%;display:flex;align-items:center;justify-content:center;color:#a9deff;text-shadow:0 0 14px #197bff;background:radial-gradient(circle at 35% 30%,#2548ff,#090b49 67%);border:2px solid #4465ff;box-shadow:0 0 18px rgba(26,91,255,.65);font-style:italic}.php-logo{width:72px;height:48px;border-radius:50%;font-size:1.75rem}.php-brand-block h1{font-size:1.7rem;margin:0 0 5px;color:#e9f2ff}.php-brand-block h1 span{font-weight:400;font-size:.95rem;color:#a6bce6}.php-brand-block p{font-size:.95rem;color:#a7b8df}.php-server-art{position:absolute;left:0;bottom:-14px;width:48%;height:188px;opacity:.86;transform:skewY(-3deg)}.rack{position:absolute;bottom:0;width:90px;height:170px;border:2px solid #2452ff;background:linear-gradient(90deg,#071747,#101c5a 48%,#090d2d);box-shadow:0 0 24px #234fff,0 0 70px rgba(81,35,255,.6);transform:skewY(5deg) rotate(10deg)}.rack-a{left:22%;height:145px}.rack-b{left:48%;height:176px}.rack i{display:block;height:18px;margin:13px 9px;border-radius:3px;background:linear-gradient(90deg,#2d6dff,#a84dff);box-shadow:0 0 8px #426eff}.php-orb{position:absolute;bottom:46px;left:39%;width:72px;height:50px;border-radius:50%;border:3px solid #2f63ff;color:#c4edff;text-shadow:0 0 10px #2784ff;display:flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:700;font-style:italic;background:rgba(4,12,51,.8);box-shadow:0 0 18px #315aff;z-index:3}
+.php-status-card,.php-resources-card,.php-links-card,.php-log-card{border:1px solid rgba(62,113,226,.42);background:linear-gradient(145deg,rgba(7,21,52,.92),rgba(3,11,30,.9));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 40px rgba(0,0,0,.25)}.php-status-card{margin-top:-1px;padding:17px 22px;border-radius:0 0 18px 18px}.php-status-line{display:flex;align-items:center;gap:10px;color:#18e5aa;font-size:1.1rem;padding-bottom:14px;border-bottom:1px solid rgba(105,145,224,.18)}.php-live-dot{width:21px;height:21px;background:#18e5aa;border-radius:50%;box-shadow:0 0 12px #18e5aa}.php-status-details{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px}.php-status-details>div{display:grid;grid-template-columns:28px 1fr;column-gap:8px;align-items:center;padding:0 14px;border-left:1px solid rgba(105,145,224,.2);color:#9daed3}.php-status-details>div:first-child{border-left:0}.php-status-details i,.php-mini-logo{grid-row:span 2}.php-status-details i{width:29px;height:29px;border:1px solid #3766b8;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#8ab9ff}.php-mini-logo{width:32px;height:32px;font-size:.85rem}.php-status-details span{font-size:.74rem}.php-status-details b{font-size:.92rem;color:#e5edff;font-weight:500}.php-action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:25px 0}.php-action{min-height:104px;border-radius:18px;background:linear-gradient(145deg,rgba(10,34,79,.95),rgba(4,18,48,.95));border:1px solid #2759ad;color:#e8f1ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-family:inherit}.php-action i{font-size:1.6rem;color:#b5d7ff;margin-bottom:5px}.php-action strong{font-size:1rem}.php-action small{color:#9fb2d8;font-size:.72rem}.php-action.stop{background:linear-gradient(145deg,rgba(105,12,53,.9),rgba(52,6,37,.94));border-color:#e22f78;color:#ff5d92}.php-action.stop i{color:#ff568c}.php-action.restart{border-color:#604bda}.php-action.restart i{color:#bd9cff}.php-resources-card{border-radius:19px;padding:20px 22px;margin-bottom:20px}.php-resources-card h2,.php-log-head h2{font-size:1rem;margin:0 0 18px;color:#e7efff}.php-resources-card h2 i,.php-log-head h2 i{color:#b6cfff;margin-right:8px}.php-resource-grid{display:grid;grid-template-columns:repeat(4,1fr)}.php-resource{text-align:center;border-left:1px solid rgba(105,145,224,.2);padding:0 10px;display:flex;align-items:center;flex-direction:column;gap:7px}.php-resource:first-child{border-left:0}.resource-ring{width:102px;height:102px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:conic-gradient(#23b6ff 0 32%,#1b315e 32% 100%);position:relative}.resource-ring:after{content:"";position:absolute;inset:10px;border-radius:50%;background:#071631}.resource-ring b{position:relative;z-index:1;font-size:1.25rem;color:#d5e5ff}.resource-ring.ram{background:conic-gradient(#19df9f 0 48%,#1b315e 48% 100%)}.resource-ring.cpu{background:conic-gradient(#ffab2f 0 12%,#303348 12% 100%)}.resource-ring.net{background:conic-gradient(#804bff 0 18%,#252554 18% 100%)}.php-resource strong{font-size:.9rem;color:#e4ecff}.php-resource span{font-size:.75rem;color:#a9b8d7}.php-links-card{border-radius:18px;overflow:hidden;margin-bottom:20px}.php-links-card button{width:100%;display:flex;align-items:center;gap:13px;padding:16px 20px;background:transparent;border:0;border-bottom:1px solid rgba(105,145,224,.18);color:#deebff;font-family:inherit;text-align:right;cursor:pointer}.php-links-card button:last-child{border-bottom:0}.php-links-card button>span:nth-child(2){display:flex;flex-direction:column;gap:4px;flex:1}.php-links-card strong{font-size:.98rem}.php-links-card small{font-size:.75rem;color:#9eafd2}.php-links-card>button>i{color:#8fb1ec}.php-link-icon{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.25rem}.php-link-icon.blue{background:#1247c5;color:#6facff}.php-link-icon.purple{background:#2625a6;color:#78a0ff}.php-link-icon.cyan{background:#0b4798;color:#68b5ff}.php-domain-pill{border:1px solid #3158a5;border-radius:20px;padding:8px 12px;color:#b6cfff;font-size:.73rem;white-space:nowrap}.php-domain-pill i{margin-right:4px}.php-log-card{border-radius:18px;padding:18px 20px;margin-bottom:20px}.php-log-head{display:flex;align-items:center;justify-content:space-between}.php-log-head h2{margin:0}.php-log-head button{background:transparent;border:0;color:#73a7ff;font-family:inherit;cursor:pointer}.php-log-output{height:142px;overflow:hidden;background:#020b1b;border:1px solid rgba(76,125,222,.32);border-radius:12px;padding:13px;font: .72rem/1.8 'JetBrains Mono',monospace;color:#7ff5be;white-space:pre-wrap;direction:ltr;text-align:left}.php-bottom-nav{display:none}
+@media(max-width:700px){#detailView.php-mode{margin:-16px -13px 0;padding:0 10px 82px}.php-hero{height:185px;padding:20px 13px;border-radius:0 0 20px 20px}.php-brand-block{gap:9px}.php-logo{width:61px;height:42px;font-size:1.4rem}.php-brand-block h1{font-size:1.25rem}.php-brand-block p{font-size:.72rem}.php-server-art{width:55%;transform:scale(.85);transform-origin:left bottom;left:-22px}.php-back{width:44px;height:44px;font-size:1.15rem}.php-status-card{margin:12px 2px 0;border-radius:17px;padding:15px}.php-status-line{font-size:.9rem}.php-status-details{gap:0}.php-status-details>div{padding:0 7px;grid-template-columns:22px 1fr}.php-status-details span{font-size:.62rem}.php-status-details b{font-size:.7rem}.php-status-details i,.php-mini-logo{width:24px;height:24px;font-size:.65rem}.php-action-grid{gap:7px;margin:15px 2px}.php-action{min-height:91px;border-radius:14px}.php-action i{font-size:1.25rem}.php-action strong{font-size:.75rem}.php-action small{font-size:.56rem}.php-resources-card,.php-links-card,.php-log-card{margin-left:2px;margin-right:2px}.php-resources-card{padding:15px 8px}.php-resources-card h2{font-size:.87rem}.php-resource-grid{grid-template-columns:repeat(2,1fr);gap:17px 0}.php-resource:nth-child(3){border-left:0}.resource-ring{width:86px;height:86px}.resource-ring b{font-size:1rem}.php-resource strong{font-size:.78rem}.php-resource span{font-size:.65rem}.php-links-card button{padding:14px 12px}.php-links-card strong{font-size:.82rem}.php-links-card small{font-size:.64rem}.php-link-icon{width:36px;height:36px;font-size:1rem}.php-domain-pill{font-size:.6rem;padding:6px 8px}.php-log-card{padding:14px 12px}.php-log-output{height:130px;font-size:.62rem}.php-bottom-nav{display:grid;position:fixed;left:10px;right:10px;bottom:10px;height:63px;grid-template-columns:repeat(5,1fr);z-index:80;background:rgba(4,14,37,.94);border:1px solid #2f62b9;border-radius:19px;padding:5px;box-shadow:0 0 25px rgba(20,83,255,.3);backdrop-filter:blur(18px)}.php-bottom-nav button{border:0;background:transparent;color:#9aafd8;font:600 .58rem 'Tajawal';display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:12px}.php-bottom-nav button i{font-size:1rem}.php-bottom-nav button.active{background:linear-gradient(135deg,#154cc1,#6927c1);color:#fff;box-shadow:0 0 16px rgba(72,61,255,.55)} }
+
+
+/* IMAGE HOSTING DASHBOARD — reference layout */
+.image-dashboard{display:none}.image-dashboard.image-active{display:block}#detailView.image-mode .detail-header,#detailView.image-mode .website-overview,#detailView.image-mode .detail-tabs,#detailView.image-mode .tab-pane{display:none}#detailView.image-mode .image-dashboard{display:block}
+.image-hero{height:285px;border:1px solid rgba(62,119,255,.42);border-radius:22px 22px 0 0;background:linear-gradient(115deg,#050b20,#071b44 52%,#160d39);position:relative;overflow:hidden;padding:32px 38px;display:flex;align-items:flex-start}.image-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 62%,rgba(24,91,255,.38),transparent 28%),linear-gradient(150deg,transparent 43%,rgba(82,49,255,.19) 44%,transparent 45%),radial-gradient(ellipse at 55% 100%,rgba(54,145,255,.2),transparent 35%)}.image-hero-copy{position:relative;z-index:2;display:grid;grid-template-columns:72px auto;column-gap:17px;align-items:center}.image-hero-icon{width:72px;height:72px;border-radius:18px;border:1px solid #2d72ff;background:linear-gradient(145deg,#1d2d9a,#340e74);box-shadow:0 0 22px rgba(40,105,255,.75);display:flex;align-items:center;justify-content:center;color:#b9d7ff;font-size:2.2rem}.image-hero-copy h1{font-size:2rem;margin:0;color:#f2f4ff}.image-hero-copy p{font-size:1rem;color:#bca9ff;margin-top:4px}.image-hero-copy>span{grid-column:1/-1;color:#b7c5e8;font-size:1rem;margin-top:20px}.image-hero-actions{position:absolute;right:24px;top:28px;display:flex;gap:10px;z-index:4}.image-hero-actions button{width:48px;height:48px;border-radius:16px;background:rgba(6,14,41,.75);color:#d5e1ff;border:1px solid #3968c6;font-size:1.2rem}.image-hero-art{position:absolute;inset:0;opacity:.86}.image-rack{position:absolute;right:17%;bottom:-20px;width:180px;height:225px;transform:skewY(4deg) rotate(4deg);border:2px solid #3b5aff;background:linear-gradient(90deg,#061443,#171266 52%,#101744);box-shadow:0 0 30px #3337ff,0 0 75px rgba(89,25,255,.7)}.image-rack i{display:block;height:22px;margin:14px 11px;border-radius:4px;background:linear-gradient(90deg,#2c67ff,#c74fff);box-shadow:0 0 10px #4875ff}.image-cloud{position:absolute;right:33%;bottom:35px;color:#59bbff;text-shadow:0 0 20px #1279ff;font-size:4.4rem}.float-photo{position:absolute;width:75px;height:54px;border:3px solid #9d9cff;border-radius:5px;background:linear-gradient(135deg,#351a9a,#ec61dc);box-shadow:0 0 14px #476eff;display:flex;align-items:center;justify-content:center;color:#d4e4ff;font-size:1.5rem}.photo-a{right:43%;top:120px;transform:rotate(-20deg)}.photo-b{right:26%;top:106px;transform:rotate(12deg)}.image-account-bar{margin:-1px 0 17px;padding:17px 20px;display:grid;grid-template-columns:1.2fr 1fr .65fr;align-items:center;gap:14px;border:1px solid rgba(62,119,255,.42);background:rgba(4,14,36,.94);border-radius:0 0 18px 18px}.image-user,.image-usage,.image-count{display:flex;align-items:center;gap:13px}.image-avatar{width:64px;height:64px;border-radius:50%;border:1px solid #735aff;background:radial-gradient(circle,#111d56,#090820);color:#b6b6ff;display:flex;align-items:center;justify-content:center;font-size:1.75rem;box-shadow:0 0 18px #2922b8}.image-user strong{display:block;font-size:1.1rem;color:#e8edff}.image-user strong span{color:#f7db89}.image-user strong b{font-size:.7rem;color:#e281ff;border:1px solid #c452ff;border-radius:10px;padding:2px 7px;margin-right:5px}.image-user small{display:block;color:#a7b8e1;margin-top:6px}.image-usage,.image-count{border:1px solid #284a98;border-radius:16px;padding:12px 16px;color:#9faed5}.image-usage>i,.image-count>i{font-size:1.45rem;color:#6f8dff}.image-usage span,.image-count span{font-size:.78rem;display:flex;flex-direction:column;gap:5px}.image-usage strong,.image-count strong{font-size:1.15rem;color:#e5edff}.image-usage em{display:block;width:150px;height:9px;border-radius:10px;background:#182a62;margin-top:2px}.image-usage em b{display:block;width:24%;height:100%;border-radius:10px;background:linear-gradient(90deg,#4b38ff,#c24bff)}.image-upload-card,.image-shortcuts,.image-latest-card{border:1px solid rgba(47,100,205,.42);background:linear-gradient(145deg,rgba(7,22,53,.92),rgba(3,12,32,.95));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 40px rgba(0,0,0,.25)}.image-upload-card{position:relative;min-height:330px;border-radius:18px;margin-bottom:17px;overflow:hidden;display:flex;justify-content:center;align-items:center}.image-upload-card:before{content:"";position:absolute;inset:12px 38px;border:2px dashed #3579ff;border-radius:25px;opacity:.9}.image-upload-center{position:relative;z-index:3;text-align:center}.upload-cloud{font-size:4rem;color:#5f8cff;text-shadow:0 0 18px #325aff}.image-upload-center h2{font-size:1.5rem;margin:8px 0;color:#edf2ff}.image-upload-center p{color:#aebce0;margin-bottom:15px}.image-choose-btn{width:260px;padding:13px;border-radius:30px;background:linear-gradient(100deg,#204cf6,#343eff,#6d31f7);border:0;color:#fff;font:700 1rem 'Tajawal';box-shadow:0 0 22px rgba(53,74,255,.6)}.image-format-row{display:flex;gap:7px;justify-content:center;margin-top:15px}.image-format-row span{font-size:.7rem;color:#b7caff;border-radius:18px;padding:5px 12px;background:#07183c;border:1px solid #21418d}.image-upload-center>small{display:block;color:#8999bd;margin-top:8px}.upload-art{position:absolute;color:#4e89ff;font-size:4rem;opacity:.34}.upload-art.left{left:8%;bottom:45px;transform:rotate(-22deg)}.upload-art.right{right:8%;top:67px;transform:rotate(18deg)}.image-drop-input{position:absolute;inset:0;z-index:2}.image-shortcuts{display:grid;grid-template-columns:repeat(4,1fr);border-radius:18px;margin-bottom:17px;padding:12px;gap:10px}.image-shortcuts button{background:rgba(7,25,61,.62);border:1px solid #23458e;border-radius:14px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;color:#ecf2ff;font-family:inherit;cursor:pointer}.image-shortcuts i{font-size:1.7rem;color:#8294ff}.image-shortcuts strong{font-size:.9rem}.image-shortcuts small{font-size:.7rem;color:#9caed4}.image-latest-card{border-radius:18px;padding:17px 18px;margin-bottom:20px}.image-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.image-section-head h2{font-size:1.05rem;color:#edf2ff}.image-section-head h2 i{color:#b8c8ff;margin-right:7px}.image-section-head button{border:0;background:transparent;color:#73a4ff;font-family:inherit;cursor:pointer}.image-latest-list{display:flex;flex-direction:column;gap:3px}.image-item{display:grid;grid-template-columns:94px 1fr 44px 28px;align-items:center;gap:13px;padding:9px 12px;border:1px solid rgba(41,75,150,.45);background:rgba(4,15,39,.72);border-radius:12px}.image-item img{width:90px;height:60px;border-radius:9px;object-fit:cover}.image-item strong{font-size:.88rem;color:#e8efff;display:block}.image-item small{color:#99add8;font-size:.72rem;display:block;margin-top:6px}.image-item .image-copy-btn{width:38px;height:38px;border-radius:50%;border:0;background:#111e55;color:#a9b8ff;font-size:1rem;cursor:pointer}.image-item .image-delete-btn{border:0;background:transparent;color:#b7c2ed;font-size:1.2rem;cursor:pointer}.image-empty{text-align:center;padding:35px;color:#9aabd0}.image-bottom-nav{display:none}
+@media(max-width:700px){#detailView.image-mode{margin:-16px -13px 0;padding:0 10px 83px}.image-hero{height:284px;padding:25px 12px;border-radius:0 0 20px 20px}.image-hero-copy{grid-template-columns:55px auto;column-gap:10px}.image-hero-icon{width:55px;height:55px;font-size:1.65rem}.image-hero-copy h1{font-size:1.35rem}.image-hero-copy p{font-size:.75rem}.image-hero-copy>span{font-size:.8rem;margin-top:16px}.image-hero-actions{right:10px;top:12px;gap:5px}.image-hero-actions button{width:36px;height:36px;border-radius:12px;font-size:.9rem}.image-rack{right:7%;width:120px;height:145px}.image-cloud{right:25%;bottom:28px;font-size:2.8rem}.float-photo{width:55px;height:40px;font-size:1rem}.photo-a{right:42%;top:139px}.photo-b{right:20%;top:125px}.image-account-bar{grid-template-columns:1fr 1fr;gap:8px;padding:12px 9px;margin:10px 2px 14px;border-radius:16px}.image-user{grid-column:1/-1}.image-avatar{width:48px;height:48px;font-size:1.3rem}.image-user strong{font-size:.85rem}.image-usage,.image-count{padding:9px 7px;gap:7px;border-radius:12px}.image-usage>i,.image-count>i{font-size:1rem}.image-usage span,.image-count span{font-size:.6rem}.image-usage strong,.image-count strong{font-size:.8rem}.image-usage em{width:90px}.image-upload-card{min-height:310px}.image-upload-card:before{inset:14px 10px;border-radius:18px}.image-upload-center h2{font-size:1.18rem}.image-upload-center p{font-size:.72rem}.image-choose-btn{width:190px;padding:11px;font-size:.85rem}.upload-cloud{font-size:3.3rem}.upload-art{font-size:2.5rem}.image-format-row span{font-size:.58rem;padding:4px 8px}.image-shortcuts{gap:5px;padding:7px}.image-shortcuts button{padding:10px 3px}.image-shortcuts i{font-size:1.3rem}.image-shortcuts strong{font-size:.66rem}.image-shortcuts small{font-size:.54rem}.image-latest-card{padding:13px 8px}.image-section-head h2{font-size:.84rem}.image-item{grid-template-columns:62px 1fr 34px 18px;gap:7px;padding:7px}.image-item img{width:60px;height:49px}.image-item strong{font-size:.72rem}.image-item small{font-size:.58rem}.image-item .image-copy-btn{width:32px;height:32px;font-size:.8rem}.image-bottom-nav{display:grid;position:fixed;left:10px;right:10px;bottom:10px;height:63px;grid-template-columns:repeat(5,1fr);z-index:80;background:rgba(4,14,37,.95);border:1px solid #2f62b9;border-radius:19px;padding:5px;box-shadow:0 0 25px rgba(20,83,255,.3);backdrop-filter:blur(18px)}.image-bottom-nav button{border:0;background:transparent;color:#9aafd8;font:600 .56rem 'Tajawal';display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:12px}.image-bottom-nav button i{font-size:1rem}.image-bottom-nav button.active{background:linear-gradient(135deg,#154cc1,#6927c1);color:#fff;box-shadow:0 0 16px rgba(72,61,255,.55)}}
+
 </style>
 <link rel="stylesheet" href="/static/mobile-neon.css">
 </head>
@@ -373,6 +398,7 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
 <!-- MAIN -->
 <div class="main" id="mainArea">
   <div class="topbar">
+    <button class="topbar-menu-btn" id="topbarMenuBtn" type="button" aria-label="فتح القائمة الجانبية" aria-expanded="true" onclick="toggleHeaderSidebar()"><i class="fas fa-bars"></i></button>
     <div class="topbar-title">
       <i class="fas fa-server" style="color:var(--accent2)"></i>
       <span id="topbarTitle">لوحة القيادة</span>
@@ -449,6 +475,66 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
         </div>
       </div>
 
+      <section class="php-dashboard" id="phpDashboard" aria-label="لوحة خادم PHP">
+        <div class="php-hero">
+          <button class="php-back" onclick="showHome()" aria-label="رجوع"><i class="fas fa-arrow-right"></i></button>
+          <div class="php-brand-block">
+            <div class="php-logo"><i class="fab fa-php"></i></div>
+            <div><h1>خادم PHP <span id="phpDashTitle">PHP</span></h1><p>إدارة وتشغيل تطبيقات PHP</p></div>
+          </div>
+          <div class="php-server-art" aria-hidden="true"><div class="rack rack-a"><i></i><i></i><i></i><i></i></div><div class="rack rack-b"><i></i><i></i><i></i><i></i></div><div class="php-orb">php</div></div>
+        </div>
+        <div class="php-status-card">
+          <div class="php-status-line"><span class="php-live-dot" id="phpLiveDot"></span><strong id="phpLiveText">الخادم يعمل بشكل طبيعي</strong></div>
+          <div class="php-status-details">
+            <div><i class="far fa-clock"></i><span>وقت التشغيل</span><b id="phpUptime">—</b></div>
+            <div><span class="php-mini-logo"><i class="fab fa-php"></i></span><span>الإصدار</span><b id="phpVersion">PHP 8.3.6</b></div>
+            <div><i class="fas fa-globe"></i><span>النطاق</span><b id="phpDomain">php-1.server</b></div>
+          </div>
+        </div>
+        <div class="php-action-grid">
+          <button class="php-action stop" onclick="srvAct('stop')"><i class="fas fa-stop"></i><strong>إيقاف</strong><small>إيقاف الخادم</small></button>
+          <button class="php-action restart" onclick="srvAct('restart')"><i class="fas fa-rotate"></i><strong>إعادة تشغيل</strong><small>تشغيل من جديد</small></button>
+          <button class="php-action console" onclick="showPhpPane('console')"><i class="fas fa-terminal"></i><strong>الكونسول</strong><small>عرض السجل المباشر</small></button>
+          <button class="php-action settings" onclick="showPhpPane('settings')"><i class="fas fa-gear"></i><strong>الإعدادات</strong><small>إعدادات الخادم</small></button>
+        </div>
+        <section class="php-resources-card">
+          <h2>استهلاك الموارد <i class="fas fa-chart-column"></i></h2>
+          <div class="php-resource-grid">
+            <div class="php-resource"><div class="resource-ring disk" id="phpDiskRing"><b id="phpDiskPct">32%</b></div><strong>القرص</strong><span id="phpDiskText">6.4 GB / 20 GB</span></div>
+            <div class="php-resource"><div class="resource-ring ram" id="phpRamRing"><b id="phpRamPct">48%</b></div><strong>الذاكرة</strong><span id="phpRamText">768 MB / 1.5 GB</span></div>
+            <div class="php-resource"><div class="resource-ring cpu" id="phpCpuRing"><b id="phpCpuPct">12%</b></div><strong>المعالج</strong><span id="phpCpuText">0.6 / 5.0 vCPU</span></div>
+            <div class="php-resource"><div class="resource-ring net" id="phpNetRing"><b>18%</b></div><strong>الشبكة</strong><span>9.2 MB / 50 MB/s</span></div>
+          </div>
+        </section>
+        <section class="php-links-card">
+          <button onclick="showPhpPane('files')"><span class="php-link-icon blue"><i class="fas fa-folder"></i></span><span><strong>إدارة الملفات</strong><small>رفع، حذف، وتعديل الملفات</small></span><i class="fas fa-chevron-left"></i></button>
+          <button onclick="showPhpPane('settings');document.getElementById('phpModeSelect')?.focus()"><span class="php-link-icon purple"><i class="fab fa-php"></i></span><span><strong>إعدادات PHP</strong><small>تغيير إصدار PHP والإضافات</small></span><i class="fas fa-chevron-left"></i></button>
+          <button id="phpDomainButton" onclick="copyPhpDomain()"><span class="php-link-icon cyan"><i class="fas fa-globe"></i></span><span><strong>المجال (Domain)</strong><small>رابط الوصول لتطبيقك</small></span><span class="php-domain-pill" id="phpDomainPill">your-domain.com <i class="fas fa-link"></i></span><i class="fas fa-chevron-left"></i></button>
+        </section>
+        <section class="php-log-card"><div class="php-log-head"><h2>آخر السجلات <i class="fas fa-terminal"></i></h2><button onclick="showPhpPane('console')">عرض الكل <i class="fas fa-chevron-left"></i></button></div><div class="php-log-output" id="phpLogPreview">جاري تحميل السجلات...</div></section>
+        <nav class="php-bottom-nav" aria-label="تنقل الخادم"><button onclick="showHome()"><i class="fas fa-house"></i><span>الرئيسية</span></button><button onclick="copyPhpDomain()"><i class="fas fa-globe"></i><span>المجال</span></button><button class="active" onclick="showPhpPane('console')"><i class="fas fa-terminal"></i><span>الكونسول</span></button><button onclick="showPhpPane('files')"><i class="fas fa-folder"></i><span>الملفات</span></button><button onclick="showPhpPane('settings')"><i class="fas fa-user"></i><span>حسابي</span></button></nav>
+      </section>
+
+      <section class="image-dashboard" id="imageDashboard" aria-label="لوحة استضافة الصور">
+        <div class="image-hero">
+          <div class="image-hero-copy"><div class="image-hero-icon"><i class="fas fa-images"></i></div><div><h1>استضافة الصور</h1><p>رفع • حفظ • مشاركة</p></div><span>رفع صورك بكل سهولة وأمان</span></div>
+          <div class="image-hero-art" aria-hidden="true"><div class="image-rack"><i></i><i></i><i></i><i></i></div><div class="image-cloud"><i class="fas fa-cloud-arrow-up"></i></div><span class="float-photo photo-a"><i class="fas fa-image"></i></span><span class="float-photo photo-b"><i class="fas fa-image"></i></span></div>
+          <div class="image-hero-actions"><button onclick="showHome()" aria-label="الرئيسية"><i class="fas fa-arrow-right"></i></button><button aria-label="الإشعارات"><i class="fas fa-bell"></i></button><button aria-label="القائمة"><i class="fas fa-bars"></i></button></div>
+        </div>
+        <div class="image-account-bar"><div class="image-user"><div class="image-avatar"><i class="fas fa-user-secret"></i></div><div><strong>YOUSEF <span>♛</span> <b>VIP</b></strong><small>@X_3GB</small></div></div><div class="image-usage"><i class="fas fa-server"></i><span>المساحة المستخدمة<strong id="imageUsageText">2.4 GB / 10 GB</strong><em><b id="imageUsageBar"></b></em></span></div><div class="image-count"><i class="fas fa-image"></i><span>عدد الصور<strong id="imageCountText">0</strong></span></div></div>
+        <section class="image-upload-card"><div class="upload-art left"><i class="fas fa-image"></i></div><div class="image-upload-center"><div class="upload-cloud"><i class="fas fa-cloud-arrow-up"></i></div><h2>رفع صورة جديدة</h2><p>اختر صورة من جهازك أو اسحبها هنا للرفع</p><button class="image-choose-btn" onclick="document.getElementById('imageIn').click()"><i class="fas fa-upload"></i> اختر صورة</button><div class="image-format-row"><span>JPG</span><span>PNG</span><span>WEBP</span><span>GIF</span><span>BMP</span></div><small>الحد الأقصى لحجم الملف: 10 MB</small></div><div class="upload-art right"><i class="fas fa-image"></i></div><div class="image-drop-input" id="imageDropZone" ondragover="onImageDragOver(event)" ondragleave="onImageDragLeave(event)" ondrop="onImageDrop(event)"></div></section>
+        <div class="image-shortcuts"><button onclick="scrollToImageSection('latest')"><i class="fas fa-clock-rotate-left"></i><strong>سجل الرفع</strong><small>جميع صورك</small></button><button onclick="toast('صورك محمية وآمنة','success')"><i class="fas fa-shield-halved"></i><strong>الخصوصية</strong><small>صورك آمنة</small></button><button onclick="toast('إعدادات تخصيص تجريبية','info')"><i class="fas fa-gear"></i><strong>الإعدادات</strong><small>تخصيص تجربتك</small></button><button onclick="scrollToImageSection('latest')"><i class="fas fa-link"></i><strong>روابط مباشرة</strong><small>مشاركة سريعة</small></button></div>
+        <section class="image-latest-card" id="imageLatestSection"><div class="image-section-head"><h2>أحدث الصور المرفوعة <i class="fas fa-images"></i></h2><button onclick="loadImages()">عرض الكل <i class="fas fa-chevron-left"></i></button></div><div id="imageLatestList" class="image-latest-list"><div class="image-empty">جاري تحميل الصور...</div></div></section>
+        <nav class="image-bottom-nav"><button onclick="showHome()"><i class="fas fa-house"></i><span>الرئيسية</span></button><button onclick="scrollToImageSection('latest')"><i class="fas fa-image"></i><span>صوري</span></button><button class="active" onclick="document.getElementById('imageIn').click()"><i class="fas fa-cloud-arrow-up"></i><span>رفع صورة</span></button><button onclick="scrollToImageSection('latest')"><i class="fas fa-link"></i><span>روابط مباشرة</span></button><button onclick="toast('الحساب','info')"><i class="fas fa-user"></i><span>حسابي</span></button></nav>
+      </section>
+
+      <section class="website-overview" id="websiteOverview" aria-label="لوحة الموقع">
+        <div class="website-overview-copy"><span class="website-eyebrow"><i class="fas fa-circle"></i> خادم يعمل بشكل ممتاز</span><h2><i class="fas fa-server"></i> خادم رفع المواقع</h2><p>ارفع ملفات موقعك وأدره بسهولة من مكان واحد.</p></div>
+        <div class="website-overview-actions"><a id="websiteOpenLink" class="website-open-link" href="#" target="_blank" rel="noopener"><i class="fas fa-globe"></i> فتح الموقع</a><button class="website-upload-btn" onclick="switchTab('files');document.getElementById('fileIn')?.click()"><i class="fas fa-cloud-arrow-up"></i> رفع موقع جديد</button></div>
+        <div class="website-mini-stats"><div><i class="fas fa-folder-open"></i><strong id="websiteFileCount">—</strong><span>ملفات الموقع</span></div><div><i class="fas fa-link"></i><strong id="websiteAddress">—</strong><span>الرابط العام</span></div><div><i class="fas fa-code"></i><strong id="websiteRuntime">HTML</strong><span>نوع الموقع</span></div></div>
+      </section>
+
       <div class="detail-tabs">
         <button class="dtab active" data-tab="console"><i class="fas fa-terminal"></i> الكونسول</button>
         <button class="dtab" data-tab="files"><i class="fas fa-folder-open"></i> الملفات</button>
@@ -486,7 +572,7 @@ body::before{background:radial-gradient(ellipse at 12% 8%,rgba(192,24,55,.3),tra
             <p style="font-size:.82rem;color:var(--text3);margin-bottom:14px">ارفع صور JPG أو PNG أو GIF أو WEBP، ثم انسخ الرابط المباشر أو احذف الصورة.</p>
             <input type="file" id="imageIn" accept="image/jpeg,image/png,image/gif,image/webp" multiple style="display:none" onchange="uploadImages(this.files)">
             <button class="ftool-btn primary" onclick="document.getElementById('imageIn').click()"><i class="fas fa-cloud-arrow-up"></i> رفع الصور</button>
-            <div id="imageDropZone" class="upload-zone" style="margin-top:14px" onclick="document.getElementById('imageIn').click()" ondragover="onImageDragOver(event)" ondragleave="onImageDragLeave(event)" ondrop="onImageDrop(event)">
+            <div id="legacyImageDropZone" class="upload-zone" style="margin-top:14px" onclick="document.getElementById('imageIn').click()" ondragover="onImageDragOver(event)" ondragleave="onImageDragLeave(event)" ondrop="onImageDrop(event)">
               <i class="fas fa-image"></i><p>اسحب الصور هنا أو انقر للاختيار</p><span>PNG · JPG · GIF · WEBP</span>
             </div>
           </div>
@@ -782,11 +868,8 @@ function buildServerCard(s){
         <div class="sc-res"><div class="sc-res-val">${s.cpu_limit||0.5}x</div><div class="sc-res-lbl">معالج</div></div>
       </div>
       <div class="sc-actions">
-        <button class="sc-btn start" onclick="event.stopPropagation();quickAct('${s.folder}','start')"><i class="fas fa-play"></i> تشغيل</button>
-        <button class="sc-btn restart" onclick="event.stopPropagation();quickAct('${s.folder}','restart')"><i class="fas fa-rotate"></i> إعادة</button>
-        <button class="sc-btn stop" onclick="event.stopPropagation();quickAct('${s.folder}','stop')"><i class="fas fa-stop"></i> إيقاف</button>
-        <button class="sc-btn delete" onclick="event.stopPropagation();quickDelete('${s.folder}','${esc(s.title)}')"><i class="fas fa-trash"></i></button>
-        ${s.server_type==='website'&&s.website_url?`<a class="sc-btn detail" target="_blank" href="${esc(s.website_url)}" onclick="event.stopPropagation()"><i class="fas fa-globe"></i> الموقع</a>`:''}<button class="sc-btn detail" onclick="event.stopPropagation();openServer(${JSON.stringify(s)})"><i class="fas fa-arrow-left"></i> تفاصيل</button>
+        ${s.server_type==='website' ? '' : `<button class="sc-btn start" onclick="event.stopPropagation();quickAct('${s.folder}','start')"><i class="fas fa-play"></i> تشغيل</button><button class="sc-btn restart" onclick="event.stopPropagation();quickAct('${s.folder}','restart')"><i class="fas fa-rotate"></i> إعادة</button><button class="sc-btn stop" onclick="event.stopPropagation();quickAct('${s.folder}','stop')"><i class="fas fa-stop"></i> إيقاف</button><button class="sc-btn delete" onclick="event.stopPropagation();quickDelete('${s.folder}','${esc(s.title)}')"><i class="fas fa-trash"></i></button>`}
+        ${s.server_type==='website'&&s.website_url?`<a class="sc-btn detail" target="_blank" href="${esc(s.website_url)}" onclick="event.stopPropagation()"><i class="fas fa-globe"></i> الموقع</a>`:''}<button class="sc-btn detail" onclick="event.stopPropagation();openServer(${JSON.stringify(s)})"><i class="fas fa-arrow-left"></i> ${s.server_type==='website'?'إدارة الملفات':'تفاصيل'}</button>
       </div>
     </div>`;
   div.addEventListener('click', () => openServer(s));
@@ -815,6 +898,26 @@ async function quickDelete(folder, title){
 function openServer(s){
   CS = s;
   const isImageHosting = String(s.language||s.server_language||'').toLowerCase()==='image' || s.server_type==='image';
+  const isWebsite = String(s.server_type||'').toLowerCase()==='website';
+  const isPhp = String(s.language||s.server_language||'').toLowerCase()==='php';
+  document.getElementById('detailView').classList.toggle('website-mode', isWebsite);
+  document.getElementById('detailView').classList.toggle('php-mode', isPhp);
+  document.getElementById('detailView').classList.toggle('image-mode', isImageHosting);
+  if(isPhp){
+    document.getElementById('phpDashTitle').textContent = s.title || 'PHP';
+    document.getElementById('phpDomain').textContent = s.website_url || `php-${s.id}.server`;
+    document.getElementById('phpDomainPill').firstChild.textContent = s.website_url || `php-${s.id}.server`;
+    document.getElementById('phpLiveText').textContent = s.status==='Running' ? 'الخادم يعمل بشكل طبيعي' : 'الخادم متوقف حالياً';
+    document.getElementById('phpVersion').textContent = s.runtime_mode==='website' ? 'PHP 8.3.6' : `PHP CLI — ${s.runtime_mode||'cli'}`;
+  }
+  const websiteLink = document.getElementById('websiteOpenLink');
+  if(websiteLink){ websiteLink.href = s.website_url || `/site/${encodeURIComponent(s.slug||s.folder||'')}`; }
+  const websiteAddress = document.getElementById('websiteAddress');
+  if(websiteAddress){ websiteAddress.textContent = s.website_url || `/site/${s.slug||s.folder||'—'}`; }
+  const websiteRuntime = document.getElementById('websiteRuntime');
+  if(websiteRuntime){ websiteRuntime.textContent = languageLabel(s.language||s.server_language||'html'); }
+  const websiteFileCount = document.getElementById('websiteFileCount');
+  if(websiteFileCount){ websiteFileCount.textContent = '—'; }
   document.getElementById('imageHostingPanel').style.display = isImageHosting ? 'block' : 'none';
   document.getElementById('filesList').style.display = isImageHosting ? 'none' : 'block';
   document.querySelector('#pane-files .files-toolbar').style.display = isImageHosting ? 'none' : 'flex';
@@ -825,6 +928,11 @@ function openServer(s){
   document.getElementById('nav-files').style.display='flex';
   document.getElementById('nav-stats').style.display='flex';
   document.getElementById('nav-settings').style.display='flex';
+  if(isWebsite){
+    document.getElementById('nav-console').style.display='none';
+    document.getElementById('nav-stats').style.display='none';
+    document.getElementById('nav-settings').style.display='none';
+  }
   document.getElementById('detailTitle').textContent = s.title;
   document.getElementById('consoleTitle').textContent = `${s.title} — stdout`;
   document.getElementById('dPort').textContent = s.port||'N/A';
@@ -836,7 +944,8 @@ function openServer(s){
   setDetailStatus(s.status);
   document.querySelectorAll('.detail-tabs .dtab').forEach((b,i) => b.classList.toggle('active',i===0));
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.getElementById('pane-console').classList.add('active');
+  document.getElementById(isWebsite ? 'pane-files' : 'pane-console').classList.add('active');
+  document.querySelectorAll('.detail-tabs .dtab').forEach(b => b.classList.toggle('active',b.dataset.tab===(isWebsite?'files':'console')));
   if(pollTimer) clearInterval(pollTimer);
   if(streamSource) streamSource.close();
   fetchStats();
@@ -861,8 +970,22 @@ function showHome(){
   loadServers();
 }
 
+function showPhpPane(tab){
+  document.querySelectorAll('.detail-tabs .dtab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('active',p.id===`pane-${tab}`));
+  if(tab==='files') loadFiles();
+  if(tab==='settings') loadStartupFiles();
+  document.getElementById(`pane-${tab}`)?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function copyPhpDomain(){
+  const value=document.getElementById('phpDomain')?.textContent||'';
+  navigator.clipboard?.writeText(value).then(()=>toast('تم نسخ رابط المجال','success')).catch(()=>toast(value,'info'));
+}
 function setDetailStatus(st){
   const running = st==='Running';
+  const phpDot=document.getElementById('phpLiveDot'), phpText=document.getElementById('phpLiveText');
+  if(phpDot){phpDot.style.background=running?'#18e5aa':'#71809d';phpDot.style.boxShadow=running?'0 0 12px #18e5aa':'none';}
+  if(phpText) phpText.textContent=running?'الخادم يعمل بشكل طبيعي':'الخادم متوقف حالياً';
   const dot = document.getElementById('detailDot');
   dot.className = running?'dot-on':'dot-off';
   document.getElementById('detailStatusTxt').textContent = running?'يعمل':'متوقف';
@@ -912,6 +1035,12 @@ async function fetchStats(){
     out.scrollTop = out.scrollHeight;
     document.getElementById('consoleMem').textContent = 'RAM: '+(d.mem||'—');
     document.getElementById('consoleUptime').textContent = 'مدة: '+(d.uptime||'—');
+    const phpPreview=document.getElementById('phpLogPreview'); if(phpPreview) phpPreview.textContent=(d.logs||'جاري تحميل السجلات...').split('\n').slice(-7).join('\n');
+    const phpUptime=document.getElementById('phpUptime'); if(phpUptime) phpUptime.textContent=d.uptime||'—';
+    const phpRamText=document.getElementById('phpRamText'); if(phpRamText && d.mem) phpRamText.textContent=`${d.mem} / ${CS.ram_limit||'—'} MB`;
+    const phpRamPct=document.getElementById('phpRamPct'); if(phpRamPct && d.mem){const pct=Math.min(100,Math.round(parseFloat(d.mem)/Number(CS.ram_limit||1)*100));phpRamPct.textContent=pct+'%';document.getElementById('phpRamRing').style.background=`conic-gradient(#19df9f 0 ${pct}%,#1b315e ${pct}% 100%)`;}
+    const phpCpuPct=document.getElementById('phpCpuPct'); if(phpCpuPct && Number.isFinite(Number(d.cpu))){const pct=Math.min(100,Math.round(Number(d.cpu)));phpCpuPct.textContent=pct+'%';document.getElementById('phpCpuRing').style.background=`conic-gradient(#ffab2f 0 ${pct}%,#303348 ${pct}% 100%)`;}
+    const phpDiskText=document.getElementById('phpDiskText'); if(phpDiskText && d.storage) phpDiskText.textContent=`${(Number(d.storage)/1024/1024/1024).toFixed(1)} GB / ${Math.round((CS.storage_limit||0)/1024)} GB`;
     document.getElementById('dUptime').textContent = d.uptime||'—';
     document.getElementById('dRAM').textContent = d.mem||'—';
     const ramPct = CS.ram_limit ? (parseFloat(d.mem||0)/CS.ram_limit*100) : 0;
@@ -967,6 +1096,8 @@ async function loadFiles(){
     const r = await fetch(`/api/files/list/${CS.folder}`);
     const payload = await r.json();
     const files = Array.isArray(payload) ? payload : (payload.files || []);
+    const websiteFileCount = document.getElementById('websiteFileCount');
+    if(websiteFileCount && document.getElementById('detailView').classList.contains('website-mode')) websiteFileCount.textContent = files.length;
     if(!files.length){ body.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">لا توجد ملفات — ارفع أول ملف!</div>'; return; }
     body.innerHTML = '';
     files.forEach(f => body.appendChild(buildFileRow(f)));
@@ -982,9 +1113,20 @@ async function loadFiles(){
 function filterFiles(query){const q=String(query||'').trim().toLowerCase();document.querySelectorAll('#filesBody .file-row').forEach(row=>{row.style.display=!q||row.textContent.toLowerCase().includes(q)?'':'none';});}
 async function loadImages(){
   if(!CS)return;
-  const grid=document.getElementById('imagesGrid'); grid.innerHTML='<div style="padding:30px;color:var(--text3)">جاري تحميل الصور...</div>';
-  try{const r=await fetch(`/api/images/${CS.folder}`),d=await r.json();if(!d.success)throw Error(d.message||'فشل تحميل الصور');const images=d.images||[];if(!images.length){grid.innerHTML='<div style="padding:30px;color:var(--text3)">لا توجد صور بعد</div>';return;}grid.innerHTML='';images.forEach(img=>{const card=document.createElement('div');card.className='server-card';const url=esc(img.url),name=esc(img.original_name||'image');card.innerHTML=`<img src="${url}" alt="${name}" style="width:100%;height:150px;object-fit:cover;display:block" loading="lazy"><div class="sc-body"><div class="sc-name" title="${name}">${name}</div><div class="sc-meta"><span class="sc-tag">${Math.ceil((img.size||0)/1024)} KB</span></div><div class="sc-actions"><button class="sc-btn detail" onclick="copyImageUrl('${url}')"><i class="fas fa-copy"></i> نسخ الرابط</button><a class="sc-btn detail" href="${url}" target="_blank"><i class="fas fa-external-link"></i> فتح</a><button class="sc-btn delete" onclick="deleteImage(${img.id})"><i class="fas fa-trash"></i></button></div></div>`;grid.appendChild(card);});}catch(e){grid.innerHTML=`<div style="padding:30px;color:var(--red)">${esc(e.message||'خطأ في تحميل الصور')}</div>`;}
+  const grid=document.getElementById('imagesGrid'), latest=document.getElementById('imageLatestList');
+  if(grid) grid.innerHTML='<div style="padding:30px;color:var(--text3)">جاري تحميل الصور...</div>';
+  if(latest) latest.innerHTML='<div class="image-empty">جاري تحميل الصور...</div>';
+  try{const r=await fetch(`/api/images/${CS.folder}`),d=await r.json();if(!d.success)throw Error(d.message||'فشل تحميل الصور');const images=d.images||[];
+    const count=document.getElementById('imageCountText'); if(count) count.textContent=images.length.toLocaleString('en-US');
+    const used=document.getElementById('imageUsageText'); if(used) used.textContent=`${((d.storage_used||0)/1024/1024/1024).toFixed(1)} GB / ${((d.storage_limit||0)/1024/1024/1024).toFixed(0)} GB`;
+    const bar=document.getElementById('imageUsageBar'); if(bar) bar.style.width=Math.min(100,(d.storage_used||0)/(d.storage_limit||1)*100)+'%';
+    if(!images.length){if(grid)grid.innerHTML='<div style="padding:30px;color:var(--text3)">لا توجد صور بعد</div>';if(latest)latest.innerHTML='<div class="image-empty">لا توجد صور بعد — اختر صورة لبدء الرفع</div>';return;}
+    if(grid) {grid.innerHTML='';images.forEach(img=>{const card=document.createElement('div');card.className='server-card';const url=esc(img.url),name=esc(img.original_name||'image');card.innerHTML=`<img src="${url}" alt="${name}" style="width:100%;height:150px;object-fit:cover;display:block" loading="lazy"><div class="sc-body"><div class="sc-name" title="${name}">${name}</div><div class="sc-meta"><span class="sc-tag">${Math.ceil((img.size||0)/1024)} KB</span></div><div class="sc-actions"><button class="sc-btn detail" onclick="copyImageUrl('${url}')"><i class="fas fa-copy"></i> نسخ الرابط</button><a class="sc-btn detail" href="${url}" target="_blank"><i class="fas fa-external-link"></i> فتح</a><button class="sc-btn delete" onclick="deleteImage(${img.id})"><i class="fas fa-trash"></i></button></div></div>`;grid.appendChild(card);});}
+    if(latest){latest.innerHTML='';images.slice(0,8).forEach(img=>{const row=document.createElement('div');row.className='image-item';const url=esc(img.url),name=esc(img.original_name||'image');const kb=Math.ceil((img.size||0)/1024);row.innerHTML=`<img src="${url}" alt="${name}" loading="lazy"><div><strong>${name}</strong><small>${kb>1024?(kb/1024).toFixed(1)+' MB':kb+' KB'} <span>　|　 ${String(img.created_at||'').slice(0,16).replace('T',' ')}</span></small></div><button class="image-copy-btn" onclick="copyImageUrl('${url}')" title="نسخ الرابط"><i class="fas fa-link"></i></button><button class="image-delete-btn" onclick="deleteImage(${img.id})" title="حذف"><i class="fas fa-ellipsis-vertical"></i></button>`;latest.appendChild(row);});}
+  }catch(e){if(grid)grid.innerHTML=`<div style="padding:30px;color:var(--red)">${esc(e.message||'خطأ في تحميل الصور')}</div>`;if(latest)latest.innerHTML='<div class="image-empty">تعذر تحميل الصور</div>';}
 }
+function scrollToImageSection(section){document.getElementById('imageLatestSection')?.scrollIntoView({behavior:'smooth'});}
+
 async function uploadImages(files){
   if(!CS||!files||!files.length)return;const fd=new FormData();for(const f of files)fd.append('files[]',f);toast('جاري رفع الصور...','info');
   try{const r=await fetch(`/api/images/${CS.folder}`,{method:'POST',body:fd}),d=await r.json();toast(d.message||(d.success?'تم رفع الصور':'فشل الرفع'),d.success?'success':'error');if(d.success)loadImages();}catch(e){toast('خطأ في رفع الصور','error');}document.getElementById('imageIn').value='';
@@ -1251,6 +1393,7 @@ document.getElementById('confirmOkBtn').addEventListener('click',()=>{
 // ===== SIDEBAR =====
 const sbEl = document.getElementById('sidebar');
 const mainEl = document.getElementById('mainArea');
+if(window.matchMedia('(max-width:900px)').matches) document.getElementById('topbarMenuBtn').setAttribute('aria-expanded','false');
 let collapsed = false;
 document.getElementById('sbToggle').addEventListener('click',()=>{
   collapsed = !collapsed;
@@ -1258,8 +1401,19 @@ document.getElementById('sbToggle').addEventListener('click',()=>{
   mainEl.classList.toggle('wide',collapsed);
   document.getElementById('sbToggleIcon').className = 'fas fa-chevron-'+(collapsed?'right':'left');
 });
-function openMobileSb(){ sbEl.classList.add('mobile-open'); document.getElementById('sbOverlay').classList.add('open'); }
-function closeMobileSb(){ sbEl.classList.remove('mobile-open'); document.getElementById('sbOverlay').classList.remove('open'); }
+function toggleHeaderSidebar(){
+  const btn = document.getElementById('topbarMenuBtn');
+  if(window.matchMedia('(max-width:900px)').matches){
+    const opened = sbEl.classList.contains('mobile-open');
+    if(opened) closeMobileSb(); else openMobileSb();
+    btn.setAttribute('aria-expanded',String(!opened));
+    return;
+  }
+  document.getElementById('sbToggle').click();
+  btn.setAttribute('aria-expanded',String(!collapsed));
+}
+function openMobileSb(){ sbEl.classList.add('mobile-open'); document.getElementById('sbOverlay').classList.add('open'); const btn=document.getElementById('topbarMenuBtn'); if(btn) btn.setAttribute('aria-expanded','true'); }
+function closeMobileSb(){ sbEl.classList.remove('mobile-open'); document.getElementById('sbOverlay').classList.remove('open'); const btn=document.getElementById('topbarMenuBtn'); if(btn) btn.setAttribute('aria-expanded','false'); }
 
 // ===== TOAST =====
 let toastTimer;
@@ -1272,10 +1426,6 @@ function toast(msg, type='info'){
   toastTimer = setTimeout(()=>t.classList.remove('show'),3200);
 }
 // Mobile navigation mirrors the reference app shell while reusing the existing views.
-function mobileHome(){ document.querySelectorAll('.mobile-bottom-nav button').forEach(b=>b.classList.remove('active')); document.getElementById('mnav-home').classList.add('active'); showHome(); }
-function mobileServers(){ document.querySelectorAll('.mobile-bottom-nav button').forEach(b=>b.classList.remove('active')); document.getElementById('mnav-servers').classList.add('active'); showHome(); setTimeout(()=>document.querySelector('.srv-header')?.scrollIntoView({behavior:'smooth',block:'start'}),80); }
-function mobileFiles(){ document.querySelectorAll('.mobile-bottom-nav button').forEach(b=>b.classList.remove('active')); document.getElementById('mnav-files').classList.add('active'); if(CS){ switchTab('files'); } else { toast('افتح سيرفرًا أولاً للوصول إلى الملفات','info'); } }
-function mobileMore(){ document.querySelectorAll('.mobile-bottom-nav button').forEach(b=>b.classList.remove('active')); document.getElementById('mnav-more').classList.add('active'); document.getElementById('sidebar')?.classList.add('mobile-open'); document.getElementById('sbOverlay')?.classList.add('open'); }
 // ===== HELPERS =====
 function esc(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 function planLabel(p){ return p==='basic'?'أساسية':p==='premium'?'احترافية':p==='ultimate'?'أسطورية':p||'أساسية'; }
@@ -1290,11 +1440,5 @@ document.addEventListener('keydown',e=>{
 
 init();
 </script>
-<nav class="mobile-bottom-nav" aria-label="التنقل السريع">
-  <button id="mnav-home" class="active" onclick="mobileHome()"><i class="fas fa-house"></i><span>الرئيسية</span></button>
-  <button id="mnav-servers" onclick="mobileServers()"><i class="fas fa-server"></i><span>السيرفرات</span></button>
-  <button id="mnav-files" onclick="mobileFiles()"><i class="fas fa-folder"></i><span>الملفات</span></button>
-  <button id="mnav-more" onclick="mobileMore()"><i class="fas fa-ellipsis"></i><span>المزيد</span></button>
-</nav>
 </body>
 </html>
